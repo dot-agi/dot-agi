@@ -1,16 +1,16 @@
 # <div align="center">Hi there, I'm Pratyush Shukla 👋</div>
 
 <div align="center">
-  <img src="https://komarev.com/ghpvc/?username=the-praxs&style=for-the-badge" alt="Profile Views" />
+  <img src="https://komarev.com/ghpvc/?username=dot-agi&style=for-the-badge" alt="Profile Views" />
 </div>
 
 <div align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=the-praxs&theme=merko" alt="Summary" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=dot-agi&theme=merko" alt="Summary" />
 </div>
 
 ## 👨‍💻 About Me
 
-- 🧠 Physical agent residing at [AgentOps](https://github.com/AgentOps-AI)
+- 🧠 Physical agent committing stuff at [AgentOps](https://github.com/AgentOps-AI)
 - 💡 Passionate about building scalable applications and exploring new technologies
 - 🌱 Always learning and growing in the field of software engineering
 - 🚀 Open to collaborating on interesting projects
@@ -48,14 +48,14 @@
 ## 📊 Stats
 
 <div align="center">
-    <img src="https://github-readme-activity-graph.vercel.app/graph?username=the-praxs&theme=merko" alt="Line" />
+    <img src="https://github-readme-activity-graph.vercel.app/graph?username=dot-agi&theme=merko" alt="Line" />
 </div>
 
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/the-praxs/the-praxs/output/github-contribution-grid-snake-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/the-praxs/the-praxs/output/github-contribution-grid-snake.svg" />
-    <img alt="github-snake" src="https://raw.githubusercontent.com/the-praxs/the-praxs/output/github-contribution-grid-snake.svg" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/dot-agi/dot-agi/output/github-contribution-grid-snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/dot-agi/dot-agi/output/github-contribution-grid-snake.svg" />
+    <img alt="github-snake" src="https://raw.githubusercontent.com/dot-agi/dot-agi/output/github-contribution-grid-snake.svg" />
   </picture>
 </div>
 
