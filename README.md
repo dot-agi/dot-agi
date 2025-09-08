@@ -10,9 +10,8 @@
 
 ## 👨‍💻 About Me
 
-- 🧠 Physical agent committing stuff at [AgentOps](https://github.com/AgentOps-AI)
 - 💡 Passionate about building scalable applications and exploring new technologies
-- 🌱 Always learning and growing in the field of software engineering
+- 🌱 Always learning and growing in the Artifical Intelligence space
 - 🚀 Open to collaborating on interesting projects
 
 ## 🛠️ Tech Stack
@@ -45,10 +44,14 @@
   <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
 </div>
 
-## 📊 Stats
+## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> Stats
 
 <div align="center">
     <img src="https://github-readme-activity-graph.vercel.app/graph?username=dot-agi&theme=merko" alt="Line" />
+</div>
+
+<div align="center">
+    <img src="./profile-3d-contrib/profile-night-rainbow.svg" alt="3D Contribution Graph" />
 </div>
 
 <div align="center">
