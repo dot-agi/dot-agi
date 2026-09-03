@@ -30,9 +30,16 @@ const QUERY = `
       login
       name
       followers { totalCount }
+      repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY]) {
+        totalCount
+      }
       repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
         totalCount
-        nodes { stargazerCount forkCount }
+        nodes {
+          stargazerCount
+          forkCount
+          languages(first: 10) { nodes { name } }
+        }
       }
       contributionsCollection {
         totalCommitContributions
@@ -84,6 +91,7 @@ if (days.length === 0) throw new Error(`Empty contribution calendar for "${usern
 
 const stars = user.repositories.nodes.reduce((s, r) => s + r.stargazerCount, 0);
 const forks = user.repositories.nodes.reduce((s, r) => s + r.forkCount, 0);
+const languages = new Set(user.repositories.nodes.flatMap((r) => r.languages.nodes.map((l) => l.name)));
 const busiest = days.reduce((best, d) => (d.count > best.count ? d : best), days[0]);
 const activeDays = days.filter((d) => d.count > 0).length;
 const range = `${days[0].date} / ${days[days.length - 1].date}`;
@@ -150,61 +158,72 @@ ${info}
 }
 
 /**
- * Attribute panel in the game's character-sheet idiom. Each attribute is a real
- * contribution metric -- the bars are scaled against the largest of them, so the
- * shape of the panel reflects how this person actually works.
+ * Character sheet. Each attribute is a GitHub signal that says something about
+ * capability rather than raw volume -- breadth of languages, work others chose
+ * to star, consistency, judgement applied to other people's code, and reach
+ * beyond your own repositories.
+ *
+ * Every metric has a different natural range, so each is scored against its own
+ * reference ceiling on a log curve and reported as a level out of 20, the way
+ * the game states attributes. The raw figure is printed alongside so the level
+ * is never the only claim being made.
  */
 function attributes() {
   const W = 1280;
-  const H = 520;
+  const H = 560;
+  const LEVELS = 20;
+
   const attrs = [
-    ['REFLEXES', 'COMMITS', cc.totalCommitContributions],
-    ['INTELLIGENCE', 'PULL REQUESTS', cc.totalPullRequestContributions],
-    ['TECHNICAL ABILITY', 'REPOSITORIES', cc.totalRepositoryContributions],
-    ['COOL', 'CODE REVIEWS', cc.totalPullRequestReviewContributions],
-    ['BODY', 'ISSUES', cc.totalIssueContributions],
+    ['TECHNICAL ABILITY', 'DISTINCT LANGUAGES SHIPPED', languages.size, 20],
+    ['INTELLIGENCE', 'STARS EARNED ON OWN WORK', stars, 1000],
+    ['REFLEXES', 'ACTIVE DAYS THIS YEAR', activeDays, 365],
+    ['COOL', 'REVIEWS GIVEN ON OTHERS\' CODE', cc.totalPullRequestReviewContributions, 500],
+    ['BODY', 'REPOS CONTRIBUTED TO', user.repositoriesContributedTo.totalCount, 100],
   ];
-  const max = Math.max(1, ...attrs.map(([, , v]) => v));
-  const SEGMENTS = 24;
-  const scale = (v) => Math.log10(v + 1) / Math.log10(max + 1);
-  const segW = 26;
+  const level = (v, ref) =>
+    Math.max(1, Math.min(LEVELS, Math.round(1 + (LEVELS - 1) * (Math.log10(v + 1) / Math.log10(ref + 1)))));
+
+  const segW = 30;
   const gap = 4;
+  const barX = 386;
 
   const rows = attrs
-    .map(([name, source, value], i) => {
-      const y = 150 + i * 54;
-      const filled = Math.max(1, Math.round(scale(value) * SEGMENTS));
-      const bar = Array.from({ length: SEGMENTS }, (_, s) => {
-        const on = s < filled;
-        const colour = !on ? '#101820' : s >= SEGMENTS - 4 ? C.yellow : C.cyan;
-        return `<rect x="${330 + s * (segW + gap)}" y="${y - 15}" width="${segW}" height="18" fill="${colour}" opacity="${on ? 1 : 0.55}"/>`;
+    .map(([name, source, value, ref], i) => {
+      const y = 156 + i * 60;
+      const lv = level(value, ref);
+      const bar = Array.from({ length: LEVELS }, (_, sIdx) => {
+        const on = sIdx < lv;
+        const colour = !on ? '#101820' : sIdx >= LEVELS - 3 ? C.yellow : C.cyan;
+        return `<rect x="${barX + sIdx * (segW + gap)}" y="${y - 16}" width="${segW}" height="19" fill="${colour}" opacity="${on ? 1 : 0.55}"/>`;
       }).join('');
-      return `<text class="display" x="44" y="${y}" font-size="24" fill="${C.text}" letter-spacing="1">${name}</text>` +
-        `<text class="mono" x="44" y="${y + 18}" font-size="11" fill="${C.muted}" letter-spacing="1.5">${source}</text>` +
+      return `<text class="display" x="44" y="${y}" font-size="25" fill="${C.text}" letter-spacing="1">${name}</text>` +
+        `<text class="mono" x="44" y="${y + 19}" font-size="11" fill="${C.muted}" letter-spacing="1.2">${source}</text>` +
         bar +
-        `<text class="display" x="${W - 44}" y="${y}" font-size="26" fill="${C.yellow}" text-anchor="end">${value}</text>`;
+        `<text class="display" x="${W - 44}" y="${y}" font-size="27" fill="${C.yellow}" text-anchor="end">LV ${lv}</text>` +
+        `<text class="mono" x="${W - 44}" y="${y + 19}" font-size="11" fill="${C.muted}" text-anchor="end" letter-spacing="1.2">${value}</text>`;
     })
     .join('\n');
 
   const creds = [
-    ['STREET CRED', user.followers.totalCount],
-    ['EDDIES (STARS)', stars],
-    ['FORKS', forks],
-    ['REPOS', user.repositories.totalCount],
+    ['STREET CRED', user.followers.totalCount, 'FOLLOWERS'],
+    ['EDDIES', stars, 'STARS'],
+    ['FORKS', forks, 'OF YOUR WORK'],
+    ['REPOS', user.repositories.totalCount, 'OWNED, NON-FORK'],
   ];
   const credW = (W - 88) / creds.length;
   const credRow = creds
-    .map(([label, value], i) => {
+    .map(([label, value, sub], i) => {
       const x = 44 + i * credW;
-      return `<rect x="${fmt(x)}" y="${H - 104}" width="${fmt(credW - 20)}" height="2" fill="${C.cyan}" opacity="0.5"/>` +
-        `<text class="mono" x="${fmt(x)}" y="${H - 84}" font-size="12" fill="${C.cyan}" letter-spacing="1.5">${label}</text>` +
-        `<text class="display" x="${fmt(x)}" y="${H - 50}" font-size="30" fill="${C.yellow}">${value}</text>`;
+      return `<rect x="${fmt(x)}" y="${H - 116}" width="${fmt(credW - 20)}" height="2" fill="${C.cyan}" opacity="0.5"/>` +
+        `<text class="mono" x="${fmt(x)}" y="${H - 96}" font-size="12" fill="${C.cyan}" letter-spacing="1.5">${label}</text>` +
+        `<text class="display" x="${fmt(x)}" y="${H - 62}" font-size="30" fill="${C.yellow}">${value}</text>` +
+        `<text class="mono" x="${fmt(x)}" y="${H - 42}" font-size="10" fill="${C.muted}" letter-spacing="1.2">${sub}</text>`;
     })
     .join('\n');
 
   return panel(W, H, `${user.login} attributes`, `
 ${heading('ATTRIBUTES', { x: 44, y: 64, rule: 200 })}
-<text class="mono" x="${W - 44}" y="64" font-size="13" fill="${C.muted}" text-anchor="end" letter-spacing="1.5">LOG SCALED TO PERSONAL MAX // ${esc(range)}</text>
+<text class="mono" x="${W - 44}" y="64" font-size="13" fill="${C.muted}" text-anchor="end" letter-spacing="1.5">LEVEL / 20 &lt;&gt; LOG-SCORED VS REFERENCE CEILING</text>
 <line x1="44" y1="96" x2="${W - 44}" y2="96" stroke="${C.grid}" stroke-width="1"/>
 ${rows}
 ${credRow}
