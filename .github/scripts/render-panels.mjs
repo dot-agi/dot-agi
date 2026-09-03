@@ -13,7 +13,8 @@
  */
 
 import { writeFile, mkdir } from 'node:fs/promises';
-import { C, RAMP, loadFonts, fontCss, sharedDefs, corners, glitch, scanlines, heading, fmt, esc } from './lib/theme.mjs';
+import { C, RAMP, loadFonts, fontCss, sharedDefs, corners, glitch, scanlines, heading,
+         breachGrid, glitchBlocks, fmt, esc } from './lib/theme.mjs';
 
 const token = process.env.GITHUB_TOKEN;
 const username = process.env.USERNAME;
@@ -144,7 +145,7 @@ ${scanlines(W, H)}
 /** Masthead: name, handle and role, framed like a character-select screen. */
 function hero() {
   const W = 1280;
-  const H = 300;
+  const H = 320;
   const display = (user.name || user.login).toUpperCase();
   const rows = [
     ['CLASS', 'NETRUNNER'],
@@ -160,8 +161,16 @@ function hero() {
     })
     .join('\n');
 
+  // Seed the decorative grid from the contribution total: it changes only when
+  // the data does, so the file stays stable between runs.
+  const seed = calendar.totalContributions * 7919 + days.length;
+
   return panel(W, H, `${display} — netrunner profile`, `
+${breachGrid(W - 372, 58, 12, 3, seed)}
 <rect x="44" y="52" width="360" height="20" fill="url(#hazard)" opacity="0.85"/>
+${glitchBlocks(44, 96, 420, seed + 13)}
+<text class="jp" x="44" y="284" font-size="15" fill="${C.magenta}" opacity="0.85" letter-spacing="4">サイバーパンク</text>
+<text class="jp" x="${W - 44}" y="284" font-size="15" fill="${C.cyan}" opacity="0.7" text-anchor="end" letter-spacing="4">ナイトシティ</text>
 ${glitch(display, { x: 44, y: 138, size: 62 })}
 <rect x="44" y="156" width="300" height="3" fill="${C.yellow}"/>
 <text class="mono" x="44" y="192" font-size="18" fill="${C.cyan}" letter-spacing="2">@${esc(user.login)}</text>

@@ -31,16 +31,23 @@ export const RAMP = ['#12161C', '#1A5561', '#00A5B5', '#00F0FF', '#FCEE0A'];
  */
 export async function loadFonts() {
   const dir = new URL('../../fonts/', import.meta.url);
-  const [display, mono] = await Promise.all([
+  const [display, mono, jp] = await Promise.all([
     readFile(new URL('rajdhani-700.woff2', dir)),
     readFile(new URL('sharetechmono.woff2', dir)),
+    readFile(new URL('notosansjp-700.woff2', dir)),
   ]);
-  return { display: display.toString('base64'), mono: mono.toString('base64') };
+  return {
+    display: display.toString('base64'),
+    mono: mono.toString('base64'),
+    jp: jp.toString('base64'),
+  };
 }
 
 export function fontCss(fonts) {
   return `@font-face { font-family: 'RJ'; font-style: normal; font-weight: 700; src: url(data:font/woff2;base64,${fonts.display}) format('woff2'); }
 @font-face { font-family: 'STM'; font-style: normal; font-weight: 400; src: url(data:font/woff2;base64,${fonts.mono}) format('woff2'); }
+@font-face { font-family: 'JP'; font-style: normal; font-weight: 700; src: url(data:font/woff2;base64,${fonts.jp}) format('woff2'); }
+.jp { font-family: 'JP', sans-serif; font-weight: 700; }
 .display { font-family: 'RJ', 'Arial Narrow', sans-serif; font-weight: 700; }
 .mono { font-family: 'STM', ui-monospace, Consolas, monospace; }`;
 }
@@ -100,4 +107,41 @@ export function fmt(n) {
 
 export function esc(text) {
   return String(text).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[c]);
+}
+
+
+/**
+ * Breach-protocol grid: the hex-pair matrix from the game's quickhack minigame.
+ * Values are drawn from a caller-supplied seed so the panel is deterministic --
+ * the renderer must not use Math.random, or every run would churn the file.
+ */
+export function breachGrid(x, y, cols, rows, seed, cell = 26) {
+  const CODES = ['1C', 'BD', '55', 'E9', '7A', 'FF'];
+  let h = seed;
+  const next = () => (h = (h * 1103515245 + 12345) & 0x7fffffff);
+  const out = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const code = CODES[next() % CODES.length];
+      const hot = next() % 7 === 0;
+      out.push(
+        `<text class="mono" x="${x + c * cell}" y="${y + r * cell}" font-size="12" ` +
+        `fill="${hot ? C.yellow : C.grid}" opacity="${hot ? 0.95 : 0.5}">${code}</text>`
+      );
+    }
+  }
+  return out.join('');
+}
+
+/** Datamosh blocks -- small offset slabs that read as a corrupted frame. */
+export function glitchBlocks(x, y, w, seed) {
+  let h = seed;
+  const next = () => (h = (h * 1103515245 + 12345) & 0x7fffffff);
+  return Array.from({ length: 7 }, () => {
+    const bx = x + (next() % w);
+    const by = y + (next() % 40);
+    const bw = 6 + (next() % 34);
+    const colour = next() % 2 ? C.cyan : C.magenta;
+    return `<rect x="${bx}" y="${by}" width="${bw}" height="2" fill="${colour}" opacity="0.55"/>`;
+  }).join('');
 }
