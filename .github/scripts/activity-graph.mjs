@@ -42,7 +42,9 @@ const from = new Date(to);
 from.setUTCFullYear(from.getUTCFullYear() - 1);
 from.setUTCDate(from.getUTCDate() + 1);
 
-const response = await fetch('https://api.github.com/graphql', {
+// A transient 5xx or secondary rate limit would otherwise fail the workflow and
+// throw away the 3D graphs regenerated in the step before this one.
+const response = await fetchWithRetry('https://api.github.com/graphql', {
   method: 'POST',
   headers: {
     Authorization: `Bearer ${token}`,
@@ -216,6 +218,22 @@ function smoothPath(pts, yTop, yBottom) {
     d += ` C ${fmt(c1[0])} ${fmt(c1[1])}, ${fmt(c2[0])} ${fmt(c2[1])}, ${fmt(p2[0])} ${fmt(p2[1])}`;
   }
   return d;
+}
+
+/** POSTs with a few backoff retries on network errors, 5xx, and rate limiting. */
+async function fetchWithRetry(url, options, attempts = 3) {
+  for (let attempt = 1; ; attempt++) {
+    const last = attempt >= attempts;
+    try {
+      const res = await fetch(url, options);
+      if (last || (res.status < 500 && res.status !== 429)) return res;
+      console.warn(`Attempt ${attempt} got HTTP ${res.status}, retrying...`);
+    } catch (error) {
+      if (last) throw error;
+      console.warn(`Attempt ${attempt} failed (${error.message}), retrying...`);
+    }
+    await new Promise((resolve) => setTimeout(resolve, attempt * 2000));
+  }
 }
 
 /** Smallest 1/2/5-times-a-power-of-ten value that is >= `value`. */

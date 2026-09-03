@@ -24,6 +24,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          # Full history so the push below can rebase onto a moved remote tip.
+          fetch-depth: 0
 
       - name: Generate 3D contribution graphs
         uses: yoshi389111/github-profile-3d-contrib@v0.9.3
@@ -48,9 +51,22 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A profile-3d-contrib assets
-          # git commit exits non-zero when nothing changed, which is the common case.
-          if git commit -m "chore: refresh profile stats graphs"; then
-            git push
-          else
+
+          # Test the index rather than git commit's exit code, so a real commit
+          # failure still fails the job instead of being read as "no changes".
+          if git diff --cached --quiet; then
             echo "Graphs are already up to date."
+            exit 0
           fi
+          git commit -m "chore: refresh profile stats graphs"
+
+          # Another run, or a person, may have pushed while the graphs regenerated.
+          for attempt in 1 2 3; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected; rebasing onto the current remote tip (attempt $attempt)."
+            git pull --rebase origin main
+          done
+          echo "Could not push after 3 attempts." >&2
+          exit 1
