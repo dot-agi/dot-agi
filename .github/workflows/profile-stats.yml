@@ -28,23 +28,31 @@ jobs:
           # Full history so the push below can rebase onto a moved remote tip.
           fetch-depth: 0
 
-      - name: Generate 3D contribution graphs
+      - name: Generate 3D contribution graph
         uses: yoshi389111/github-profile-3d-contrib@v0.9.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
+          # With SETTING_JSON the action emits only this themed file instead of
+          # its ten stock variants, so the palette matches the activity graph.
+          SETTING_JSON: .github/profile-3d/cyberpunk.json
 
       - name: Set up Node
         uses: actions/setup-node@v5
         with:
           node-version: "22"
 
-      - name: Generate activity graph
-        run: node .github/scripts/activity-graph.mjs
+      - name: Match the 3D graph's typography
+        run: node .github/scripts/theme-3d.mjs
+        env:
+          TARGET: profile-3d-contrib/profile-cyberpunk.svg
+
+      - name: Render README panels
+        run: node .github/scripts/render-panels.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
-          OUTPUT: assets/activity-graph.svg
+          OUT_DIR: assets
 
       - name: Commit and push
         run: |

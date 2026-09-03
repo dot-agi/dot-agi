@@ -1,67 +1,115 @@
-# <div align="center">Hi there, I'm Pratyush Shukla 👋</div>
-
 <div align="center">
-  <img src="https://komarev.com/ghpvc/?username=dot-agi&style=for-the-badge" alt="Profile Views" />
+  <img src="./assets/hero.svg" alt="Pratyush Shukla — netrunner profile" width="100%" />
 </div>
 
 <div align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=dot-agi&theme=merko" alt="Summary" />
+  <img src="https://img.shields.io/badge/STATUS-JACKED_IN-FCEE0A?style=for-the-badge&labelColor=05050A" alt="Status" />
+  <img src="https://komarev.com/ghpvc/?username=dot-agi&style=for-the-badge&color=FCEE0A&label=NETWATCH+SCANS" alt="Profile views" />
+  <a href="https://github.com/dot-agi?tab=followers"><img src="https://img.shields.io/github/followers/dot-agi?style=for-the-badge&color=00F0FF&labelColor=05050A&label=STREET+CRED" alt="Followers" /></a>
 </div>
 
-## 👨‍💻 About Me
+---
 
-- 💡 Passionate about building scalable applications and exploring new technologies
-- 🌱 Always learning and growing in the Artifical Intelligence space
-- 🚀 Open to collaborating on interesting projects
+## `//` DOSSIER
 
-<!---
-## 🛠️ Tech Stack
+> Building scalable systems and pushing on the frontier of artificial intelligence.
+> Always learning, always shipping — open to collaborating on interesting problems.
 
-### 🖥️ Programming Languages
-<div align="center">
-  <img src ="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
-  <img src ="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" />
-  <img src ="https://img.shields.io/badge/LaTeX-47A141?style=for-the-badge&logo=LaTeX&logoColor=white" />
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-</div>
+```console
+> netrunner --profile dot-agi --verbose
+  HANDLE ......... dot-agi
+  CLASS .......... NETRUNNER
+  SPEC ........... ARTIFICIAL INTELLIGENCE
+  BASE ........... ABUNDANT AI
+  MOTTO .......... "Only the best survive"
+  STATUS ......... ONLINE
+```
 
-### 🤖 AI
-<div align="center">
-  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" />
-  <img src="https://img.shields.io/badge/CUDA-76B900?style=for-the-badge&logo=nvidia&logoColor=white" />
-  <img src="https://img.shields.io/badge/LangChain-121212?style=for-the-badge&logo=chainlink&logoColor=white" />
-  <img src="https://img.shields.io/badge/OpenAI_Agents-412991?style=for-the-badge&logo=openai&logoColor=white" />
-  <img src="https://img.shields.io/badge/Weights_&_Biases-FFBE00?style=for-the-badge&logo=WeightsAndBiases&logoColor=white" />
-  <img src ="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" />
-  <img src ="https://img.shields.io/badge/Railway-131415?style=for-the-badge&logo=railway&logoColor=white" />
-  <img src ="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white" />
-  <img src ="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white" />
-  <img src ="https://img.shields.io/badge/fastapi-109989?style=for-the-badge&logo=FASTAPI&logoColor=white" />
-  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" />
-  <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white" />
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/Isaac_Sim-76B900?style=for-the-badge&logo=nvidia&logoColor=white" />
-  <img src="https://img.shields.io/badge/ROS-22314E?style=for-the-badge&logo=ros&logoColor=white" />
-  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
-</div>
--->
+---
 
-## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> Stats
+## `//` ATTRIBUTES
 
 <div align="center">
-    <img src="./assets/activity-graph.svg" alt="Contribution activity graph" />
+  <img src="./assets/attributes.svg" alt="Contribution attributes" width="100%" />
+</div>
+
+---
+
+## `//` CYBERWARE — INSTALLED MODULES
+
+<details open>
+<summary><b>NEURAL PROCESSOR — AI / ML</b></summary>
+<br>
+<div align="center">
+  <img src="https://img.shields.io/badge/PyTorch-05050A?style=for-the-badge&logo=pytorch&logoColor=FCEE0A" alt="PyTorch" />
+  <img src="https://img.shields.io/badge/CUDA-05050A?style=for-the-badge&logo=nvidia&logoColor=FCEE0A" alt="CUDA" />
+  <img src="https://img.shields.io/badge/LangChain-05050A?style=for-the-badge&logo=langchain&logoColor=FCEE0A" alt="LangChain" />
+  <img src="https://img.shields.io/badge/OpenAI-05050A?style=for-the-badge&logoColor=FCEE0A" alt="OpenAI" />
+  <img src="https://img.shields.io/badge/Weights_&_Biases-05050A?style=for-the-badge&logo=weightsandbiases&logoColor=FCEE0A" alt="Weights and Biases" />
+  <img src="https://img.shields.io/badge/OpenCV-05050A?style=for-the-badge&logo=opencv&logoColor=FCEE0A" alt="OpenCV" />
+</div>
+</details>
+
+<details open>
+<summary><b>OPERATING SYSTEM — LANGUAGES</b></summary>
+<br>
+<div align="center">
+  <img src="https://img.shields.io/badge/Python-05050A?style=for-the-badge&logo=python&logoColor=00F0FF" alt="Python" />
+  <img src="https://img.shields.io/badge/C++-05050A?style=for-the-badge&logo=cplusplus&logoColor=00F0FF" alt="C++" />
+  <img src="https://img.shields.io/badge/Go-05050A?style=for-the-badge&logo=go&logoColor=00F0FF" alt="Go" />
+  <img src="https://img.shields.io/badge/Rust-05050A?style=for-the-badge&logo=rust&logoColor=00F0FF" alt="Rust" />
+  <img src="https://img.shields.io/badge/TypeScript-05050A?style=for-the-badge&logo=typescript&logoColor=00F0FF" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/LaTeX-05050A?style=for-the-badge&logo=latex&logoColor=00F0FF" alt="LaTeX" />
+</div>
+</details>
+
+<details open>
+<summary><b>SUBDERMAL ARMOR — INFRASTRUCTURE</b></summary>
+<br>
+<div align="center">
+  <img src="https://img.shields.io/badge/Docker-05050A?style=for-the-badge&logo=docker&logoColor=FF003C" alt="Docker" />
+  <img src="https://img.shields.io/badge/FastAPI-05050A?style=for-the-badge&logo=fastapi&logoColor=FF003C" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/Flask-05050A?style=for-the-badge&logo=flask&logoColor=FF003C" alt="Flask" />
+  <img src="https://img.shields.io/badge/GitHub_Actions-05050A?style=for-the-badge&logo=githubactions&logoColor=FF003C" alt="GitHub Actions" />
+  <img src="https://img.shields.io/badge/Railway-05050A?style=for-the-badge&logo=railway&logoColor=FF003C" alt="Railway" />
+  <img src="https://img.shields.io/badge/Postman-05050A?style=for-the-badge&logo=postman&logoColor=FF003C" alt="Postman" />
+</div>
+</details>
+
+<details open>
+<summary><b>KIROSHI OPTICS — ROBOTICS</b></summary>
+<br>
+<div align="center">
+  <img src="https://img.shields.io/badge/ROS-05050A?style=for-the-badge&logo=ros&logoColor=FCEE0A" alt="ROS" />
+  <img src="https://img.shields.io/badge/Isaac_Sim-05050A?style=for-the-badge&logo=nvidia&logoColor=FCEE0A" alt="Isaac Sim" />
+  <img src="https://img.shields.io/badge/Git-05050A?style=for-the-badge&logo=git&logoColor=FCEE0A" alt="Git" />
+</div>
+</details>
+
+---
+
+## `//` NET ACTIVITY
+
+<div align="center">
+  <img src="./assets/activity-graph.svg" alt="Contribution activity graph" width="100%" />
 </div>
 
 <div align="center">
-    <img src="./profile-3d-contrib/profile-night-rainbow.svg" alt="3D Contribution Graph" />
+  <img src="./profile-3d-contrib/profile-cyberpunk.svg" alt="3D contribution graph" width="100%" />
 </div>
 
 <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/dot-agi/dot-agi/output/github-contribution-grid-snake-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/dot-agi/dot-agi/output/github-contribution-grid-snake.svg" />
-    <img alt="github-snake" src="https://raw.githubusercontent.com/dot-agi/dot-agi/output/github-contribution-grid-snake.svg" />
-  </picture>
+  <img src="https://raw.githubusercontent.com/dot-agi/dot-agi/output/github-contribution-grid-snake-dark.svg" alt="Contribution snake" width="100%" />
 </div>
 
-## 
+---
+
+## `//` UPLINK
+
+<div align="center">
+  <a href="https://github.com/dot-agi"><img src="https://img.shields.io/badge/GitHub-05050A?style=for-the-badge&logo=github&logoColor=FCEE0A" alt="GitHub" /></a>
+</div>
+
+<div align="center">
+  <img src="./assets/footer.svg" alt="End of line" width="100%" />
+</div>
