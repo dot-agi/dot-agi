@@ -3,8 +3,8 @@
 </div>
 
 <div align="center">
-  <img src="https://komarev.com/ghpvc/?username=dot-agi&style=for-the-badge&color=FCEE0A&label=NETWATCH+SCANS" alt="Profile views" />
-  <a href="https://github.com/dot-agi?tab=followers"><img src="https://img.shields.io/github/followers/dot-agi?style=for-the-badge&color=00F0FF&labelColor=05050A&label=STREET+CRED" alt="Followers" /></a>
+  <img src="https://komarev.com/ghpvc/?username=dot-agi&style=for-the-badge&color=05050A&label=NETWATCH+SCANS" alt="Profile views" />
+  <a href="https://github.com/dot-agi?tab=followers"><img src="https://img.shields.io/github/followers/dot-agi?style=for-the-badge&color=05050A&labelColor=0A0A12&label=STREET+CRED&logo=github" alt="Followers" /></a>
 </div>
 
 ---
