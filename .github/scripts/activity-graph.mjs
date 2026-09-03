@@ -19,10 +19,14 @@ const output = process.env.OUTPUT || 'assets/activity-graph.svg';
 if (!token) throw new Error('GITHUB_TOKEN is required');
 if (!username) throw new Error('USERNAME is required');
 
+// No from/to: take GitHub's default trailing-year calendar, which is what
+// github-profile-3d-contrib queries too. Passing an explicit 365-day range
+// instead would start the window four days later than the week-aligned default,
+// so the two graphs in the README would disagree on both period and total.
 const QUERY = `
-  query ($login: String!, $from: DateTime!, $to: DateTime!) {
+  query ($login: String!) {
     user(login: $login) {
-      contributionsCollection(from: $from, to: $to) {
+      contributionsCollection {
         contributionCalendar {
           totalContributions
           weeks {
@@ -37,11 +41,6 @@ const QUERY = `
   }
 `;
 
-const to = new Date();
-const from = new Date(to);
-from.setUTCFullYear(from.getUTCFullYear() - 1);
-from.setUTCDate(from.getUTCDate() + 1);
-
 // A transient 5xx or secondary rate limit would otherwise fail the workflow and
 // throw away the 3D graphs regenerated in the step before this one.
 const response = await fetchWithRetry('https://api.github.com/graphql', {
@@ -53,7 +52,7 @@ const response = await fetchWithRetry('https://api.github.com/graphql', {
   },
   body: JSON.stringify({
     query: QUERY,
-    variables: { login: username, from: from.toISOString(), to: to.toISOString() },
+    variables: { login: username },
   }),
 });
 
@@ -69,27 +68,30 @@ if (payload.errors) {
 const calendar = payload.data?.user?.contributionsCollection?.contributionCalendar;
 if (!calendar) throw new Error(`No contribution calendar returned for "${username}"`);
 
-// The calendar is week-aligned, so the first and last weeks can reach outside the
-// requested range. Days past today would come back as zeros and draw a cliff at
-// the right edge, so clip to the window we actually asked for.
-const fromDay = from.toISOString().slice(0, 10);
-const toDay = to.toISOString().slice(0, 10);
+// The calendar is week-aligned, so the final week can run past today. Those days
+// come back as zeros and would draw a cliff at the right edge, so drop them. The
+// week-aligned start is kept deliberately -- it is what makes this window match
+// the 3D graph's.
+const today = new Date().toISOString().slice(0, 10);
 const days = calendar.weeks
   .flatMap((week) => week.contributionDays)
-  .filter((day) => day.date >= fromDay && day.date <= toDay)
+  .filter((day) => day.date <= today)
   .map((day) => ({ date: day.date, count: day.contributionCount }))
   .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
 
 if (days.length === 0) throw new Error(`Empty contribution calendar for "${username}"`);
 
 // A trailing 7-day average keeps the line readable without hiding real spikes,
-// and avoids the partial-week dips a weekly bucketing would introduce at both ends.
-const WINDOW = 7;
-const series = days.map((day, i) => {
-  const start = Math.max(0, i - WINDOW + 1);
-  const slice = days.slice(start, i + 1);
-  const sum = slice.reduce((total, d) => total + d.count, 0);
-  return { date: day.date, value: sum / slice.length };
+// and avoids the partial-week dips a weekly bucketing would introduce.
+//
+// The first WINDOW-1 days are not plotted: averaging them over a short window
+// would make them a different statistic to every other point, and since the peak
+// sets the y-scale, one busy day landing on the window start would squash the
+// whole year. The header still describes the full contribution period.
+const WINDOW = Math.min(7, days.length);
+const series = days.slice(WINDOW - 1).map((day, i) => {
+  const sum = days.slice(i, i + WINDOW).reduce((total, d) => total + d.count, 0);
+  return { date: day.date, value: sum / WINDOW };
 });
 
 const W = 1280;
@@ -113,9 +115,11 @@ const linePath = smoothPath(points, PAD.top, PAD.top + plotH);
 const areaPath = `${linePath} L ${fmt(points[points.length - 1][0])} ${fmt(PAD.top + plotH)} L ${fmt(points[0][0])} ${fmt(PAD.top + plotH)} Z`;
 
 // Horizontal gridlines, labelled with the contribution rate they represent.
+// Derive decimals from the step so small steps cannot collapse into duplicates.
+const decimals = Math.max(0, -Math.floor(Math.log10(gridStep)));
 const gridlines = Array.from({ length: gridCount + 1 }, (_, i) => {
   const value = gridStep * i;
-  return { y: yAt(value), label: formatValue(value) };
+  return { y: yAt(value), label: value.toFixed(decimals) };
 });
 
 // One tick per month boundary, so the axis reads as a calendar rather than an index.
@@ -133,7 +137,7 @@ const busiest = days.reduce((best, d) => (d.count > best.count ? d : best), days
 const activeDays = days.filter((d) => d.count > 0).length;
 const rangeLabel = `${days[0].date} → ${days[days.length - 1].date}`;
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(`${username} contribution activity, ${rangeLabel}`)}">
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(`${username} contribution activity, 7-day average, ${rangeLabel}`)}">
 <title>${esc(`${username} — ${calendar.totalContributions} contributions between ${rangeLabel}`)}</title>
 <defs>
 <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
@@ -155,9 +159,10 @@ text { font-family: "Ubuntu", "Helvetica", "Arial", sans-serif; }
 .axis { fill: #6e7681; font-size: 13px; }
 .grid { stroke: #21262d; stroke-width: 1; }
 </style>
-<rect x="0" y="0" width="${W}" height="${H}" rx="10" fill="#00000f"/>
+<rect x="0" y="0" width="${W}" height="${H}" fill="#00000f"/>
 <text class="title" x="${PAD.left}" y="46">${esc(username)}</text>
 <text class="meta" x="${W - PAD.right}" y="46" text-anchor="end">${esc(rangeLabel)}</text>
+<text class="axis" x="${W - PAD.right}" y="${PAD.top - 10}" text-anchor="end">contributions/day · 7-day average</text>
 ${statLine()}
 ${gridlines
   .map(
@@ -245,10 +250,6 @@ function niceStep(value) {
     if (candidate >= value) return candidate;
   }
   return 10 * magnitude;
-}
-
-function formatValue(value) {
-  return value >= 10 || Number.isInteger(value) ? String(Math.round(value)) : value.toFixed(1);
 }
 
 function monthLabel(date) {
