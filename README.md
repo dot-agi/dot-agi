@@ -49,7 +49,7 @@
 ## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> Stats
 
 <div align="center">
-    <img src="https://github-readme-activity-graph.vercel.app/graph?username=dot-agi&theme=merko" alt="Line" />
+    <img src="./assets/activity-graph.svg" alt="Contribution activity graph" />
 </div>
 
 <div align="center">

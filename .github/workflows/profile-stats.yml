@@ -1,0 +1,56 @@
+name: Generate Profile Stats
+
+on:
+  schedule:
+    - cron: "0 18 * * *"  # Daily at 18:00 UTC
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+# Three triggers can overlap, and two runs pushing to main would collide.
+concurrency:
+  group: profile-stats
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Generate 3D contribution graphs
+        uses: yoshi389111/github-profile-3d-contrib@v0.9.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Generate activity graph
+        run: node .github/scripts/activity-graph.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+          OUTPUT: assets/activity-graph.svg
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A profile-3d-contrib assets
+          # git commit exits non-zero when nothing changed, which is the common case.
+          if git commit -m "chore: refresh profile stats graphs"; then
+            git push
+          else
+            echo "Graphs are already up to date."
+          fi
