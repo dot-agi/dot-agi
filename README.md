@@ -48,7 +48,7 @@
   <img src="https://img.shields.io/badge/PyTorch-05050A?style=for-the-badge&logo=pytorch&logoColor=FCEE0A" alt="PyTorch" />
   <img src="https://img.shields.io/badge/CUDA-05050A?style=for-the-badge&logo=nvidia&logoColor=FCEE0A" alt="CUDA" />
   <img src="https://img.shields.io/badge/Flux.jl-05050A?style=for-the-badge&logo=julia&logoColor=FCEE0A" alt="Flux.jl" />
-  <img src="https://img.shields.io/badge/scikit--learn-05050A?style=for-the-badge&logo=scikitlearn&logoColor=FCEE0A" alt="scikit--learn" />
+  <img src="https://img.shields.io/badge/scikit--learn-05050A?style=for-the-badge&logo=scikitlearn&logoColor=FCEE0A" alt="scikit-learn" />
   <img src="https://img.shields.io/badge/OpenCV-05050A?style=for-the-badge&logo=opencv&logoColor=FCEE0A" alt="OpenCV" />
   <img src="https://img.shields.io/badge/Jupyter-05050A?style=for-the-badge&logo=jupyter&logoColor=FCEE0A" alt="Jupyter" />
   <img src="https://img.shields.io/badge/Weights_%26_Biases-05050A?style=for-the-badge&logo=weightsandbiases&logoColor=FCEE0A" alt="Weights %26 Biases" />
@@ -64,6 +64,7 @@
   <img src="https://img.shields.io/badge/C-05050A?style=for-the-badge&logo=c&logoColor=00F0FF" alt="C" />
   <img src="https://img.shields.io/badge/Rust-05050A?style=for-the-badge&logo=rust&logoColor=00F0FF" alt="Rust" />
   <img src="https://img.shields.io/badge/Julia-05050A?style=for-the-badge&logo=julia&logoColor=00F0FF" alt="Julia" />
+  <img src="https://img.shields.io/badge/TypeScript-05050A?style=for-the-badge&logo=typescript&logoColor=00F0FF" alt="TypeScript" />
   <img src="https://img.shields.io/badge/MATLAB-05050A?style=for-the-badge&logoColor=00F0FF" alt="MATLAB" />
   <img src="https://img.shields.io/badge/LaTeX-05050A?style=for-the-badge&logo=latex&logoColor=00F0FF" alt="LaTeX" />
 </div>
@@ -74,12 +75,24 @@
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/Embassy-05050A?style=for-the-badge&logo=rust&logoColor=FCEE0A" alt="Embassy" />
-  <img src="https://img.shields.io/badge/ARM_Cortex--M-05050A?style=for-the-badge&logo=arm&logoColor=FCEE0A" alt="ARM Cortex--M" />
-  <img src="https://img.shields.io/badge/Tauri-05050A?style=for-the-badge&logo=tauri&logoColor=FCEE0A" alt="Tauri" />
-  <img src="https://img.shields.io/badge/USB_HID-05050A?style=for-the-badge&logoColor=FCEE0A" alt="USB HID" />
+  <img src="https://img.shields.io/badge/ARM_Cortex--M-05050A?style=for-the-badge&logo=arm&logoColor=FCEE0A" alt="ARM Cortex-M" />
+  <img src="https://img.shields.io/badge/Cargo-05050A?style=for-the-badge&logo=rust&logoColor=FCEE0A" alt="Cargo" />
+  <img src="https://img.shields.io/badge/defmt-05050A?style=for-the-badge&logo=rust&logoColor=FCEE0A" alt="defmt" />
   <img src="https://img.shields.io/badge/Bluetooth_LE-05050A?style=for-the-badge&logo=bluetooth&logoColor=FCEE0A" alt="Bluetooth LE" />
-  <img src="https://img.shields.io/badge/DFU-05050A?style=for-the-badge&logoColor=FCEE0A" alt="DFU" />
-  <img src="https://img.shields.io/badge/probe--rs-05050A?style=for-the-badge&logo=rust&logoColor=FCEE0A" alt="probe--rs" />
+</div>
+</details>
+
+<details open>
+<summary><b>NERVOUS SYSTEM</b> — <i>the interface layer — apps & UI</i></summary>
+<br>
+<div align="center">
+  <img src="https://img.shields.io/badge/React-05050A?style=for-the-badge&logo=react&logoColor=FF003C" alt="React" />
+  <img src="https://img.shields.io/badge/Vite-05050A?style=for-the-badge&logo=vite&logoColor=FF003C" alt="Vite" />
+  <img src="https://img.shields.io/badge/Tauri-05050A?style=for-the-badge&logo=tauri&logoColor=FF003C" alt="Tauri" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-05050A?style=for-the-badge&logo=tailwindcss&logoColor=FF003C" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Vitest-05050A?style=for-the-badge&logo=vitest&logoColor=FF003C" alt="Vitest" />
+  <img src="https://img.shields.io/badge/ESLint-05050A?style=for-the-badge&logo=eslint&logoColor=FF003C" alt="ESLint" />
+  <img src="https://img.shields.io/badge/Node.js-05050A?style=for-the-badge&logo=nodedotjs&logoColor=FF003C" alt="Node.js" />
 </div>
 </details>
 
@@ -87,13 +100,13 @@
 <summary><b>CIRCULATORY SYSTEM</b> — <i>what keeps it flowing — infra & delivery</i></summary>
 <br>
 <div align="center">
-  <img src="https://img.shields.io/badge/Docker-05050A?style=for-the-badge&logo=docker&logoColor=FF003C" alt="Docker" />
-  <img src="https://img.shields.io/badge/GitHub_Actions-05050A?style=for-the-badge&logo=githubactions&logoColor=FF003C" alt="GitHub Actions" />
-  <img src="https://img.shields.io/badge/Git-05050A?style=for-the-badge&logo=git&logoColor=FF003C" alt="Git" />
-  <img src="https://img.shields.io/badge/Linux-05050A?style=for-the-badge&logo=linux&logoColor=FF003C" alt="Linux" />
-  <img src="https://img.shields.io/badge/FastAPI-05050A?style=for-the-badge&logo=fastapi&logoColor=FF003C" alt="FastAPI" />
-  <img src="https://img.shields.io/badge/Postman-05050A?style=for-the-badge&logo=postman&logoColor=FF003C" alt="Postman" />
-  <img src="https://img.shields.io/badge/Railway-05050A?style=for-the-badge&logo=railway&logoColor=FF003C" alt="Railway" />
+  <img src="https://img.shields.io/badge/Docker-05050A?style=for-the-badge&logo=docker&logoColor=00F0FF" alt="Docker" />
+  <img src="https://img.shields.io/badge/GitHub_Actions-05050A?style=for-the-badge&logo=githubactions&logoColor=00F0FF" alt="GitHub Actions" />
+  <img src="https://img.shields.io/badge/Git-05050A?style=for-the-badge&logo=git&logoColor=00F0FF" alt="Git" />
+  <img src="https://img.shields.io/badge/Linux-05050A?style=for-the-badge&logo=linux&logoColor=00F0FF" alt="Linux" />
+  <img src="https://img.shields.io/badge/FastAPI-05050A?style=for-the-badge&logo=fastapi&logoColor=00F0FF" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/Postman-05050A?style=for-the-badge&logo=postman&logoColor=00F0FF" alt="Postman" />
+  <img src="https://img.shields.io/badge/Railway-05050A?style=for-the-badge&logo=railway&logoColor=00F0FF" alt="Railway" />
 </div>
 </details>
 
@@ -101,12 +114,12 @@
 <summary><b>KIROSHI OPTICS</b> — <i>seeing the data — analysis & signal</i></summary>
 <br>
 <div align="center">
-  <img src="https://img.shields.io/badge/NumPy-05050A?style=for-the-badge&logo=numpy&logoColor=00F0FF" alt="NumPy" />
-  <img src="https://img.shields.io/badge/pandas-05050A?style=for-the-badge&logo=pandas&logoColor=00F0FF" alt="pandas" />
-  <img src="https://img.shields.io/badge/SciPy-05050A?style=for-the-badge&logo=scipy&logoColor=00F0FF" alt="SciPy" />
-  <img src="https://img.shields.io/badge/Plotly-05050A?style=for-the-badge&logo=plotly&logoColor=00F0FF" alt="Plotly" />
-  <img src="https://img.shields.io/badge/PycURL-05050A?style=for-the-badge&logo=curl&logoColor=00F0FF" alt="PycURL" />
-  <img src="https://img.shields.io/badge/OpenAPI-05050A?style=for-the-badge&logo=openapiinitiative&logoColor=00F0FF" alt="OpenAPI" />
+  <img src="https://img.shields.io/badge/NumPy-05050A?style=for-the-badge&logo=numpy&logoColor=FCEE0A" alt="NumPy" />
+  <img src="https://img.shields.io/badge/pandas-05050A?style=for-the-badge&logo=pandas&logoColor=FCEE0A" alt="pandas" />
+  <img src="https://img.shields.io/badge/SciPy-05050A?style=for-the-badge&logo=scipy&logoColor=FCEE0A" alt="SciPy" />
+  <img src="https://img.shields.io/badge/Plotly-05050A?style=for-the-badge&logo=plotly&logoColor=FCEE0A" alt="Plotly" />
+  <img src="https://img.shields.io/badge/PycURL-05050A?style=for-the-badge&logo=curl&logoColor=FCEE0A" alt="PycURL" />
+  <img src="https://img.shields.io/badge/OpenAPI-05050A?style=for-the-badge&logo=openapiinitiative&logoColor=FCEE0A" alt="OpenAPI" />
 </div>
 </details>
 

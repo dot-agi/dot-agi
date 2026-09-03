@@ -33,6 +33,7 @@ const QUERY = `
       repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY]) {
         totalCount
       }
+      pullRequests(states: MERGED) { totalCount }
       repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
         totalCount
         nodes {
@@ -90,7 +91,6 @@ const days = calendar.weeks
 if (days.length === 0) throw new Error(`Empty contribution calendar for "${username}"`);
 
 const stars = user.repositories.nodes.reduce((s, r) => s + r.stargazerCount, 0);
-const forks = user.repositories.nodes.reduce((s, r) => s + r.forkCount, 0);
 const languages = new Set(user.repositories.nodes.flatMap((r) => r.languages.nodes.map((l) => l.name)));
 const busiest = days.reduce((best, d) => (d.count > best.count ? d : best), days[0]);
 const activeDays = days.filter((d) => d.count > 0).length;
@@ -173,12 +173,14 @@ function attributes() {
   const H = 560;
   const LEVELS = 20;
 
+  // Stars measure how popular work is, not how capable its author is, so they
+  // sit in the cred row below rather than scoring an attribute here.
   const attrs = [
     ['TECHNICAL ABILITY', 'DISTINCT LANGUAGES SHIPPED', languages.size, 20],
-    ['INTELLIGENCE', 'STARS EARNED ON OWN WORK', stars, 1000],
+    ['INTELLIGENCE', 'PULL REQUESTS MERGED', user.pullRequests.totalCount, 500],
     ['REFLEXES', 'ACTIVE DAYS THIS YEAR', activeDays, 365],
     ['COOL', 'REVIEWS GIVEN ON OTHERS\' CODE', cc.totalPullRequestReviewContributions, 500],
-    ['BODY', 'REPOS CONTRIBUTED TO', user.repositoriesContributedTo.totalCount, 100],
+    ['BODY', 'COMMITS THIS YEAR', cc.totalCommitContributions, 3000],
   ];
   const level = (v, ref) =>
     Math.max(1, Math.min(LEVELS, Math.round(1 + (LEVELS - 1) * (Math.log10(v + 1) / Math.log10(ref + 1)))));
@@ -206,9 +208,9 @@ function attributes() {
 
   const creds = [
     ['STREET CRED', user.followers.totalCount, 'FOLLOWERS'],
-    ['EDDIES', stars, 'STARS'],
-    ['FORKS', forks, 'OF YOUR WORK'],
-    ['REPOS', user.repositories.totalCount, 'OWNED, NON-FORK'],
+    ['EDDIES', stars, 'STARS EARNED'],
+    ['CREWS', user.repositoriesContributedTo.totalCount, 'REPOS CONTRIBUTED TO'],
+    ['ARSENAL', user.repositories.totalCount, 'REPOS OWNED'],
   ];
   const credW = (W - 88) / creds.length;
   const credRow = creds
