@@ -41,14 +41,6 @@
 
 ---
 
-## `//` OPEN SOURCE
-
-<div align="center">
-  <img src="./assets/oss.svg" alt="Open source contributions" width="100%" />
-</div>
-
----
-
 ## `//` CYBERWARE — INSTALLED MODULES
 
 <details open>

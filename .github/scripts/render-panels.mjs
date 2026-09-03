@@ -12,7 +12,7 @@
  *   OUT_DIR       output directory (default: assets)
  */
 
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { writeFile, mkdir } from 'node:fs/promises';
 import { C, RAMP, loadFonts, fontCss, sharedDefs, corners, glitch, scanlines, heading, fmt, esc } from './lib/theme.mjs';
 
 const token = process.env.GITHUB_TOKEN;
@@ -25,7 +25,8 @@ if (!username) throw new Error('USERNAME is required');
 // No date range: this is GitHub's default trailing-year calendar, the same
 // window github-profile-3d-contrib uses, so every panel reports one period.
 const QUERY = `
-  query ($login: String!) {
+  query ($login: String!, $prQuery: String!) {
+    externalMerged: search(query: $prQuery, type: ISSUE) { issueCount }
     user(login: $login) {
       login
       name
@@ -33,7 +34,6 @@ const QUERY = `
       repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY]) {
         totalCount
       }
-      pullRequests(states: MERGED) { totalCount }
       repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
         totalCount
         nodes {
@@ -65,7 +65,15 @@ const response = await fetchWithRetry('https://api.github.com/graphql', {
     'Content-Type': 'application/json',
     'User-Agent': 'readme-panel-renderer',
   },
-  body: JSON.stringify({ query: QUERY, variables: { login: username } }),
+  body: JSON.stringify({
+    query: QUERY,
+    variables: {
+      login: username,
+      // Merged into repositories this account does not own -- work other
+      // maintainers reviewed and accepted. Public repos only.
+      prQuery: `author:${username} is:pr is:merged is:public -user:${username}`,
+    },
+  }),
 });
 
 if (!response.ok) {
@@ -74,6 +82,7 @@ if (!response.ok) {
 const payload = await response.json();
 if (payload.errors) throw new Error(`GitHub GraphQL API errors: ${JSON.stringify(payload.errors)}`);
 
+const externalMerged = payload.data?.externalMerged?.issueCount ?? 0;
 const user = payload.data?.user;
 if (!user) throw new Error(`No data returned for "${username}"`);
 
@@ -97,46 +106,15 @@ const busiest = days.reduce((best, d) => (d.count > best.count ? d : best), days
 const activeDays = days.filter((d) => d.count > 0).length;
 const range = `${days[0].date} / ${days[days.length - 1].date}`;
 
-const ossRepos = JSON.parse(
-  await readFile(new URL('../panels/oss.json', import.meta.url), 'utf8')
-).repos;
-
-// One aliased query gets each repo's current stars and this user's merged-PR
-// count, so the panel never carries hand-maintained numbers that can go stale.
-const ossQuery = `query {\n${ossRepos
-  .map((r, i) => `  r${i}: repository(owner: "${r.owner}", name: "${r.name}") { nameWithOwner stargazerCount }\n` +
-    `  p${i}: search(query: "repo:${r.owner}/${r.name} author:${username} is:pr is:merged", type: ISSUE) { issueCount }`)
-  .join('\n')}\n}`;
-
-const ossRes = await fetchWithRetry('https://api.github.com/graphql', {
-  method: 'POST',
-  headers: {
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/json',
-    'User-Agent': 'readme-panel-renderer',
-  },
-  body: JSON.stringify({ query: ossQuery }),
-});
-const ossJson = ossRes.ok ? await ossRes.json() : { data: {} };
-if (ossJson.errors) console.warn(`OSS query warnings: ${JSON.stringify(ossJson.errors)}`);
-const oss = ossRepos
-  .map((r, i) => ({
-    name: ossJson.data?.[`r${i}`]?.nameWithOwner ?? `${r.owner}/${r.name}`,
-    stars: ossJson.data?.[`r${i}`]?.stargazerCount ?? 0,
-    merged: ossJson.data?.[`p${i}`]?.issueCount ?? 0,
-  }))
-  .sort((a, b) => b.stars - a.stars);
-
 const fonts = await loadFonts();
 await mkdir(outDir, { recursive: true });
 
 await write('hero.svg', hero());
-await write('oss.svg', openSource());
 await write('attributes.svg', attributes());
 await write('activity-graph.svg', activityGraph());
 await write('footer.svg', footer());
 
-console.log(`Rendered 5 panels for ${username} — ${calendar.totalContributions} contributions, ${range}`);
+console.log(`Rendered 4 panels for ${username} — ${calendar.totalContributions} contributions, ${range}`);
 
 async function write(name, body) {
   await writeFile(`${outDir}/${name}`, body, 'utf8');
@@ -190,45 +168,6 @@ ${info}
 }
 
 /**
- * Public repositories contributed to, ordered by reach. Stars and merged-PR
- * counts come from the API at render time; the repo list is the only thing
- * stored. Employer-org work is not represented here -- this is the public
- * record only.
- */
-function openSource() {
-  const W = 1280;
-  const rowH = 46;
-  const top = 168;
-  const H = top + oss.length * rowH + 60;
-  const totalStars = oss.reduce((t, r) => t + r.stars, 0);
-  const totalMerged = oss.reduce((t, r) => t + r.merged, 0);
-  const widest = Math.max(1, ...oss.map((r) => r.stars));
-  const k = (n) => (n >= 1000 ? `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k` : String(n));
-
-  const rows = oss
-    .map((r, i) => {
-      const y = top + i * rowH;
-      const barW = Math.max(3, Math.round((r.stars / widest) * 300));
-      return `<rect x="44" y="${y - 20}" width="${W - 88}" height="1" fill="${C.grid}"/>` +
-        `<text class="mono" x="44" y="${y + 4}" font-size="15" fill="${C.text}">${esc(r.name)}</text>` +
-        `<rect x="720" y="${y - 9}" width="${barW}" height="12" fill="${C.cyan}" opacity="0.45"/>` +
-        `<text class="mono" x="${W - 190}" y="${y + 4}" font-size="14" fill="${C.cyan}" text-anchor="end">${k(r.stars)} &#9733;</text>` +
-        `<text class="display" x="${W - 44}" y="${y + 6}" font-size="20" fill="${r.merged > 0 ? C.yellow : C.muted}" text-anchor="end">${r.merged} MERGED</text>`;
-    })
-    .join('\n');
-
-  return panel(W, H, `${user.login} open source contributions`, `
-${heading('OPEN SOURCE', { x: 44, y: 64, rule: 200 })}
-<text class="mono" x="${W - 44}" y="64" font-size="13" fill="${C.muted}" text-anchor="end" letter-spacing="1.5">PUBLIC REPOSITORIES CONTRIBUTED TO</text>
-<text class="display" x="44" y="108" font-size="32" fill="${C.yellow}">${totalMerged}</text>
-<text class="mono" x="${44 + String(totalMerged).length * 20 + 12}" y="108" font-size="13" fill="${C.muted}" letter-spacing="1.5">PRS MERGED</text>
-<text class="display" x="${W - 44}" y="108" font-size="32" fill="${C.yellow}" text-anchor="end">${k(totalStars)}</text>
-<text class="mono" x="${W - 44}" y="128" font-size="12" fill="${C.muted}" text-anchor="end" letter-spacing="1.5">COMBINED STARS</text>
-${rows}
-`);
-}
-
-/**
  * Character sheet. Each attribute is a GitHub signal that says something about
  * capability rather than raw volume -- breadth of languages, work others chose
  * to star, consistency, judgement applied to other people's code, and reach
@@ -248,7 +187,7 @@ function attributes() {
   // sit in the cred row below rather than scoring an attribute here.
   const attrs = [
     ['TECHNICAL ABILITY', 'DISTINCT LANGUAGES SHIPPED', languages.size, 20],
-    ['INTELLIGENCE', 'PULL REQUESTS MERGED', user.pullRequests.totalCount, 500],
+    ['INTELLIGENCE', 'PRS MERGED INTO OTHERS\' REPOS', externalMerged, 500],
     ['REFLEXES', 'ACTIVE DAYS THIS YEAR', activeDays, 365],
     ['COOL', 'REVIEWS GIVEN ON OTHERS\' CODE', cc.totalPullRequestReviewContributions, 500],
     ['BODY', 'COMMITS THIS YEAR', cc.totalCommitContributions, 3000],
