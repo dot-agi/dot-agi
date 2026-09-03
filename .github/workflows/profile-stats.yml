@@ -61,12 +61,16 @@ jobs:
           git commit -m "chore: refresh profile stats graphs"
 
           # Another run, or a person, may have pushed while the graphs regenerated.
+          # If that push also regenerated these SVGs, the rebase hits a content
+          # conflict; "theirs" during a rebase means the commit being replayed, so
+          # this run's fresher regeneration wins. Only conflicting files are taken
+          # that way, so unrelated work in the other commit survives untouched.
           for attempt in 1 2 3; do
             if git push; then
               exit 0
             fi
             echo "Push rejected; rebasing onto the current remote tip (attempt $attempt)."
-            git pull --rebase origin main
+            git pull --rebase -X theirs origin main
           done
           echo "Could not push after 3 attempts." >&2
           exit 1
