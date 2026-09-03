@@ -27,9 +27,8 @@
                        fr8003-re ........ Freqchip FR8003A BLE radio, reverse engineered
                        DeFiLlama-Curl ... Python client for the DeFiLlama API
                        dl-benchmark ..... PyTorch vs Flux.jl on HPC
-  UNDER NDA .......... agent observability, robotics LLM control, vision re-ID
-                       -- see CONTRACTS below
-  TRAINED AT ......... NYU  <>  Lovely Professional University
+  UNDER NDA .......... agent observability, robotics LLM control, vision re-ID,
+                       post-training data and evals for frontier labs
 ```
 
 ---
@@ -42,14 +41,6 @@
 
 ---
 
-## `//` CONTRACTS
-
-<div align="center">
-  <img src="./assets/contracts.svg" alt="Work history" width="100%" />
-</div>
-
----
-
 ## `//` CYBERWARE — INSTALLED MODULES
 
 <details open>
@@ -58,12 +49,40 @@
 <div align="center">
   <img src="https://img.shields.io/badge/PyTorch-05050A?style=for-the-badge&logo=pytorch&logoColor=FCEE0A" alt="PyTorch" />
   <img src="https://img.shields.io/badge/JAX-05050A?style=for-the-badge&logoColor=FCEE0A" alt="JAX" />
+  <img src="https://img.shields.io/badge/Hugging_Face-05050A?style=for-the-badge&logo=huggingface&logoColor=FCEE0A" alt="Hugging Face" />
   <img src="https://img.shields.io/badge/Transformers-05050A?style=for-the-badge&logo=huggingface&logoColor=FCEE0A" alt="Transformers" />
-  <img src="https://img.shields.io/badge/LangChain-05050A?style=for-the-badge&logo=langchain&logoColor=FCEE0A" alt="LangChain" />
-  <img src="https://img.shields.io/badge/CUDA-05050A?style=for-the-badge&logo=nvidia&logoColor=FCEE0A" alt="CUDA" />
+  <img src="https://img.shields.io/badge/Diffusers-05050A?style=for-the-badge&logo=huggingface&logoColor=FCEE0A" alt="Diffusers" />
   <img src="https://img.shields.io/badge/scikit--learn-05050A?style=for-the-badge&logo=scikitlearn&logoColor=FCEE0A" alt="scikit-learn" />
   <img src="https://img.shields.io/badge/OpenCV-05050A?style=for-the-badge&logo=opencv&logoColor=FCEE0A" alt="OpenCV" />
+  <img src="https://img.shields.io/badge/ONNX-05050A?style=for-the-badge&logo=onnx&logoColor=FCEE0A" alt="ONNX" />
   <img src="https://img.shields.io/badge/Flux.jl-05050A?style=for-the-badge&logo=julia&logoColor=FCEE0A" alt="Flux.jl" />
+</div>
+</details>
+
+<details open>
+<summary><b>NEUROPORT</b> — <i>jacked in — agents & LLM stack</i></summary>
+<br>
+<div align="center">
+  <img src="https://img.shields.io/badge/LangChain-05050A?style=for-the-badge&logo=langchain&logoColor=00F0FF" alt="LangChain" />
+  <img src="https://img.shields.io/badge/LangGraph-05050A?style=for-the-badge&logo=langgraph&logoColor=00F0FF" alt="LangGraph" />
+  <img src="https://img.shields.io/badge/Hermes_Agent-05050A?style=for-the-badge&logoColor=00F0FF" alt="Hermes Agent" />
+  <img src="https://img.shields.io/badge/OpenAI_Agents-05050A?style=for-the-badge&logoColor=00F0FF" alt="OpenAI Agents" />
+  <img src="https://img.shields.io/badge/Anthropic-05050A?style=for-the-badge&logo=anthropic&logoColor=00F0FF" alt="Anthropic" />
+  <img src="https://img.shields.io/badge/Mistral-05050A?style=for-the-badge&logo=mistralai&logoColor=00F0FF" alt="Mistral" />
+  <img src="https://img.shields.io/badge/vLLM-05050A?style=for-the-badge&logo=vllm&logoColor=00F0FF" alt="vLLM" />
+  <img src="https://img.shields.io/badge/Ollama-05050A?style=for-the-badge&logo=ollama&logoColor=00F0FF" alt="Ollama" />
+</div>
+</details>
+
+<details open>
+<summary><b>SANDEVISTAN</b> — <i>acceleration — GPU & compute</i></summary>
+<br>
+<div align="center">
+  <img src="https://img.shields.io/badge/CUDA-05050A?style=for-the-badge&logo=nvidia&logoColor=FF003C" alt="CUDA" />
+  <img src="https://img.shields.io/badge/TensorRT-05050A?style=for-the-badge&logo=nvidia&logoColor=FF003C" alt="TensorRT" />
+  <img src="https://img.shields.io/badge/Triton-05050A?style=for-the-badge&logo=nvidia&logoColor=FF003C" alt="Triton" />
+  <img src="https://img.shields.io/badge/Jetson-05050A?style=for-the-badge&logo=nvidia&logoColor=FF003C" alt="Jetson" />
+  <img src="https://img.shields.io/badge/Ray-05050A?style=for-the-badge&logo=ray&logoColor=FF003C" alt="Ray" />
 </div>
 </details>
 
@@ -107,6 +126,7 @@
   <img src="https://img.shields.io/badge/Tauri-05050A?style=for-the-badge&logo=tauri&logoColor=FF003C" alt="Tauri" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-05050A?style=for-the-badge&logo=tailwindcss&logoColor=FF003C" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Vitest-05050A?style=for-the-badge&logo=vitest&logoColor=FF003C" alt="Vitest" />
+  <img src="https://img.shields.io/badge/Cypress-05050A?style=for-the-badge&logo=cypress&logoColor=FF003C" alt="Cypress" />
 </div>
 </details>
 
@@ -117,7 +137,6 @@
   <img src="https://img.shields.io/badge/Docker-05050A?style=for-the-badge&logo=docker&logoColor=00F0FF" alt="Docker" />
   <img src="https://img.shields.io/badge/AWS-05050A?style=for-the-badge&logoColor=00F0FF" alt="AWS" />
   <img src="https://img.shields.io/badge/Google_Cloud-05050A?style=for-the-badge&logo=googlecloud&logoColor=00F0FF" alt="Google Cloud" />
-  <img src="https://img.shields.io/badge/Ray-05050A?style=for-the-badge&logo=ray&logoColor=00F0FF" alt="Ray" />
   <img src="https://img.shields.io/badge/Airflow-05050A?style=for-the-badge&logo=apacheairflow&logoColor=00F0FF" alt="Airflow" />
   <img src="https://img.shields.io/badge/GitHub_Actions-05050A?style=for-the-badge&logo=githubactions&logoColor=00F0FF" alt="GitHub Actions" />
   <img src="https://img.shields.io/badge/Git-05050A?style=for-the-badge&logo=git&logoColor=00F0FF" alt="Git" />
@@ -147,6 +166,7 @@
   <img src="https://img.shields.io/badge/ClickHouse-05050A?style=for-the-badge&logo=clickhouse&logoColor=FCEE0A" alt="ClickHouse" />
   <img src="https://img.shields.io/badge/Supabase-05050A?style=for-the-badge&logo=supabase&logoColor=FCEE0A" alt="Supabase" />
   <img src="https://img.shields.io/badge/Neon-05050A?style=for-the-badge&logo=neon&logoColor=FCEE0A" alt="Neon" />
+  <img src="https://img.shields.io/badge/Redis-05050A?style=for-the-badge&logo=redis&logoColor=FCEE0A" alt="Redis" />
 </div>
 </details>
 
@@ -158,6 +178,7 @@
   <img src="https://img.shields.io/badge/pandas-05050A?style=for-the-badge&logo=pandas&logoColor=00F0FF" alt="pandas" />
   <img src="https://img.shields.io/badge/SciPy-05050A?style=for-the-badge&logo=scipy&logoColor=00F0FF" alt="SciPy" />
   <img src="https://img.shields.io/badge/PySpark-05050A?style=for-the-badge&logo=apachespark&logoColor=00F0FF" alt="PySpark" />
+  <img src="https://img.shields.io/badge/Polars-05050A?style=for-the-badge&logo=polars&logoColor=00F0FF" alt="Polars" />
   <img src="https://img.shields.io/badge/Pydantic-05050A?style=for-the-badge&logo=pydantic&logoColor=00F0FF" alt="Pydantic" />
   <img src="https://img.shields.io/badge/SQLAlchemy-05050A?style=for-the-badge&logo=sqlalchemy&logoColor=00F0FF" alt="SQLAlchemy" />
   <img src="https://img.shields.io/badge/Plotly-05050A?style=for-the-badge&logo=plotly&logoColor=00F0FF" alt="Plotly" />
@@ -187,6 +208,7 @@
 
 <div align="center">
   <a href="https://github.com/dot-agi"><img src="https://img.shields.io/badge/GitHub-05050A?style=for-the-badge&logo=github&logoColor=FCEE0A" alt="GitHub" /></a>
+  <a href="https://x.com/prattybhai"><img src="https://img.shields.io/badge/X-05050A?style=for-the-badge&logo=x&logoColor=00F0FF" alt="X" /></a>
 </div>
 
 <div align="center">

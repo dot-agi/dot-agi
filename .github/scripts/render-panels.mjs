@@ -12,7 +12,7 @@
  *   OUT_DIR       output directory (default: assets)
  */
 
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { writeFile, mkdir } from 'node:fs/promises';
 import { C, RAMP, loadFonts, fontCss, sharedDefs, corners, glitch, scanlines, heading, fmt, esc } from './lib/theme.mjs';
 
 const token = process.env.GITHUB_TOKEN;
@@ -98,18 +98,14 @@ const activeDays = days.filter((d) => d.count > 0).length;
 const range = `${days[0].date} / ${days[days.length - 1].date}`;
 
 const fonts = await loadFonts();
-const contractData = JSON.parse(
-  await readFile(new URL('../panels/contracts.json', import.meta.url), 'utf8')
-).contracts;
 await mkdir(outDir, { recursive: true });
 
 await write('hero.svg', hero());
-await write('contracts.svg', contracts());
 await write('attributes.svg', attributes());
 await write('activity-graph.svg', activityGraph());
 await write('footer.svg', footer());
 
-console.log(`Rendered 5 panels for ${username} — ${calendar.totalContributions} contributions, ${range}`);
+console.log(`Rendered 4 panels for ${username} — ${calendar.totalContributions} contributions, ${range}`);
 
 async function write(name, body) {
   await writeFile(`${outDir}/${name}`, body, 'utf8');
@@ -159,41 +155,6 @@ ${glitch(display, { x: 44, y: 138, size: 62 })}
 <text class="display" x="44" y="230" font-size="26" fill="${C.text}" letter-spacing="2">ONLY THE BEST SURVIVE</text>
 <text class="mono" x="44" y="258" font-size="13" fill="${C.muted}" letter-spacing="1.5">SCALABLE SYSTEMS &lt;&gt; AI RESEARCH &lt;&gt; OPEN TO COLLAB</text>
 ${info}
-`);
-}
-
-/**
- * Work history, read from .github/panels/contracts.json. The copy there is
- * deliberately abstracted -- private and client work is described by what it
- * was, never by internal tool names or figures.
- */
-function contracts() {
-  const W = 1280;
-  const rowH = 118;
-  const top = 130;
-  const H = top + contractData.length * rowH + 40;
-
-  const rows = contractData
-    .map((c, i) => {
-      const y = top + i * rowH;
-      const live = c.status === 'ACTIVE';
-      const body = c.lines
-        .map((line, n) => `<text class="mono" x="44" y="${y + 42 + n * 19}" font-size="13" fill="${C.muted}">${esc(line)}</text>`)
-        .join('');
-      return `<rect x="44" y="${y - 26}" width="${W - 88}" height="1" fill="${C.grid}"/>` +
-        `<rect x="44" y="${y - 18}" width="4" height="26" fill="${live ? C.yellow : C.grid}"/>` +
-        `<text class="display" x="60" y="${y}" font-size="27" fill="${live ? C.yellow : C.text}" letter-spacing="1">${esc(c.org)}</text>` +
-        `<text class="mono" x="60" y="${y + 20}" font-size="12" fill="${C.cyan}" letter-spacing="1.5">${esc(c.role)}</text>` +
-        `<text class="mono" x="${W - 44}" y="${y}" font-size="14" fill="${live ? C.yellow : C.muted}" text-anchor="end" letter-spacing="1.5">${esc(c.period)}</text>` +
-        `<text class="mono" x="${W - 44}" y="${y + 20}" font-size="11" fill="${live ? C.cyan : C.grid}" text-anchor="end" letter-spacing="1.5">${live ? '&#9679; ' + esc(c.status) : esc(c.status)}</text>` +
-        body;
-    })
-    .join('\n');
-
-  return panel(W, H, `${user.login} work history`, `
-${heading('CONTRACTS', { x: 44, y: 64, rule: 200 })}
-<text class="mono" x="${W - 44}" y="64" font-size="13" fill="${C.muted}" text-anchor="end" letter-spacing="1.5">${contractData.length} LOGGED &lt;&gt; MOST RECENT FIRST</text>
-${rows}
 `);
 }
 
