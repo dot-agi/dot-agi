@@ -110,11 +110,15 @@ const fonts = await loadFonts();
 await mkdir(outDir, { recursive: true });
 
 await write('hero.svg', hero());
+await mkdir(`${outDir}/icons`, { recursive: true });
+for (const [name, body] of Object.entries(headingIcons())) {
+  await write(`icons/${name}`, body);
+}
 await write('attributes.svg', attributes());
 await write('activity-graph.svg', activityGraph());
 await write('footer.svg', footer());
 
-console.log(`Rendered 4 panels for ${username} — ${calendar.totalContributions} contributions, ${range}`);
+console.log(`Rendered 4 panels and 5 heading icons for ${username} — ${calendar.totalContributions} contributions, ${range}`);
 
 async function write(name, body) {
   await writeFile(`${outDir}/${name}`, body, 'utf8');
@@ -165,6 +169,68 @@ ${glitch(display, { x: 44, y: 138, size: 62 })}
 <text class="mono" x="44" y="258" font-size="13" fill="${C.muted}" letter-spacing="1.5">SCALABLE SYSTEMS &lt;&gt; AI RESEARCH &lt;&gt; OPEN TO COLLAB</text>
 ${info}
 `);
+}
+
+/**
+ * Small animated glyphs that sit beside each section heading. SMIL animation
+ * plays in a README image, which is how the stock GitHub heading GIFs work --
+ * these do the same thing without depending on a third-party GIF host.
+ */
+function headingIcons() {
+  const wrap = (body) =>
+    `<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">${body}</svg>\n`;
+  const pulse = (dur, from = '0.35', to = '1') =>
+    `<animate attributeName="opacity" values="${from};${to};${from}" dur="${dur}" repeatCount="indefinite"/>`;
+
+  return {
+    // A terminal prompt with a blinking cursor.
+    'dossier.svg': wrap(
+      `<rect x="2" y="5" width="30" height="24" rx="2" fill="none" stroke="${C.cyan}" stroke-width="2"/>` +
+      `<path d="M7 12l4 5-4 5" fill="none" stroke="${C.yellow}" stroke-width="2" stroke-linecap="round"/>` +
+      `<rect x="15" y="20" width="10" height="2.5" fill="${C.yellow}">` +
+      `<animate attributeName="opacity" values="1;1;0;0" dur="1.1s" repeatCount="indefinite"/></rect>`
+    ),
+    // Attribute bars filling in sequence.
+    'attributes.svg': wrap(
+      [6, 13, 20, 27]
+        .map((y, i) => {
+          const w = [22, 15, 26, 11][i];
+          // Never shrink past ~45%, so the glyph always reads as bars rather
+          // than as a column of dots mid-cycle.
+          const lo = Math.round(w * 0.45);
+          return `<rect x="4" y="${y - 2}" width="${w}" height="4" fill="${i % 2 ? C.cyan : C.yellow}">` +
+            `<animate attributeName="width" values="${lo};${w};${lo}" dur="${2.4 + i * 0.3}s" repeatCount="indefinite"/></rect>`;
+        })
+        .join('')
+    ),
+    // A chip with a pulsing core.
+    'cyberware.svg': wrap(
+      `<rect x="9" y="9" width="16" height="16" rx="1" fill="none" stroke="${C.yellow}" stroke-width="2"/>` +
+      `<rect x="14" y="14" width="6" height="6" fill="${C.cyan}">${pulse('1.6s')}</rect>` +
+      [
+        'M17 2v7', 'M17 25v7', 'M2 17h7', 'M25 17h7',
+      ]
+        .map((d, i) => `<path d="${d}" stroke="${C.cyan}" stroke-width="2" stroke-linecap="round">${pulse(`${1.4 + i * 0.2}s`, '0.25')}</path>`)
+        .join('')
+    ),
+    // A trace sweeping across a waveform.
+    'activity.svg': wrap(
+      `<polyline points="2,24 7,24 10,12 14,20 18,7 22,18 26,14 32,14" fill="none" stroke="${C.yellow}" ` +
+      `stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>` +
+      `<rect x="0" y="2" width="4" height="30" fill="${C.cyan}" opacity="0.5">` +
+      `<animate attributeName="x" values="-4;32" dur="2.6s" repeatCount="indefinite"/></rect>`
+    ),
+    // Broadcast arcs expanding outward.
+    'uplink.svg': wrap(
+      `<circle cx="17" cy="24" r="3" fill="${C.yellow}"/>` +
+      [8, 14, 20]
+        .map((r, i) =>
+          `<path d="M${17 - r} 24a${r} ${r} 0 0 1 ${r * 2} 0" fill="none" stroke="${C.cyan}" stroke-width="2" stroke-linecap="round">` +
+          `<animate attributeName="opacity" values="0;1;0" dur="2s" begin="${i * 0.45}s" repeatCount="indefinite"/></path>`
+        )
+        .join('')
+    ),
+  };
 }
 
 /**
