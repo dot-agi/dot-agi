@@ -9,7 +9,7 @@
 
 ---
 
-## <img src="./assets/icons/dossier.svg" width="26" align="center" /> `//` DOSSIER
+## <img src="./assets/icons/dossier.svg" width="26" align="center" /> DOSSIER
 
 > I work at both ends of the stack. Days go into post-training data and evaluation
 > infrastructure for frontier models; nights go into bare-metal firmware for hardware
@@ -33,7 +33,7 @@
 
 ---
 
-## <img src="./assets/icons/attributes.svg" width="26" align="center" /> `//` ATTRIBUTES
+## <img src="./assets/icons/attributes.svg" width="26" align="center" /> ATTRIBUTES
 
 <div align="center">
   <img src="./assets/attributes.svg" alt="Contribution attributes" width="100%" />
@@ -41,14 +41,14 @@
 
 ---
 
-## <img src="./assets/icons/cyberware.svg" width="26" align="center" /> `//` CYBERWARE — INSTALLED MODULES
+## <img src="./assets/icons/cyberware.svg" width="26" align="center" /> CYBERWARE
 
 <details open>
-<summary><b>FRONTAL CORTEX</b> — <i>cognition — AI / ML</i></summary>
+<summary><b>FRONTAL CORTEX</b> — <i>model training and inference</i></summary>
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/PyTorch-05050A?style=for-the-badge&logo=pytorch" alt="PyTorch" />
-  <img src="https://img.shields.io/badge/JAX-05050A?style=for-the-badge&logo=data:image/svg%2Bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxNCI+PHBvbHlnb24gZmlsbD0iIzVlOTdmNiIgcG9pbnRzPSIyLjcsNi45IDEuNCw5LjIgNC4wLDkuMiA1LjMsNi45IDIuNyw2LjkiLz48cG9seWdvbiBmaWxsPSIjNWU5N2Y2IiBwb2ludHM9IjAuMCwxMS41IDEuNCw5LjIgNC4wLDkuMiAyLjcsMTEuNSAwLjAsMTEuNSIvPjxwb2x5Z29uIGZpbGw9IiM1ZTk3ZjYiIHBvaW50cz0iNi43LDkuMiA0LjAsOS4yIDIuNywxMS41IDUuMywxMS41IDYuNyw5LjIiLz48cG9seWdvbiBmaWxsPSIjNWU5N2Y2IiBwb2ludHM9IjkuMyw5LjIgNi43LDkuMiA1LjMsMTEuNSA4LjAsMTEuNSA5LjMsOS4yIi8+PHBvbHlnb24gZmlsbD0iIzVlOTdmNiIgcG9pbnRzPSI4LjAsNi45IDYuNyw5LjIgOS4zLDkuMiAxMC43LDYuOSA4LjAsNi45Ii8+PHBvbHlnb24gZmlsbD0iIzVlOTdmNiIgcG9pbnRzPSI5LjMsNC42IDguMCw2LjkgMTAuNyw2LjkgMTIuMCw0LjYgOS4zLDQuNiIvPjxwb2x5Z29uIGZpbGw9IiM1ZTk3ZjYiIHBvaW50cz0iMTAuNywyLjMgOS4zLDQuNiAxMi4wLDQuNiAxMy4zLDIuMyAxMC43LDIuMyIvPjxwb2x5Z29uIGZpbGw9IiM1ZTk3ZjYiIHBvaW50cz0iMTIuMCwwLjAgMTAuNywyLjMgMTMuMywyLjMgMTQuNywwLjAgMTIuMCwwLjAiLz48cG9seWdvbiBmaWxsPSIjMmE1NmM2IiBwb2ludHM9IjAuMCwxMS41IDEuNCwxMy45IDQuMCwxMy45IDIuNywxMS41IDAuMCwxMS41Ii8+PHBvbHlnb24gZmlsbD0iIzJhNTZjNiIgcG9pbnRzPSI2LjcsMTMuOSA0LjAsMTMuOSAyLjcsMTEuNSA1LjMsMTEuNSA2LjcsMTMuOSIvPjxwb2x5Z29uIGZpbGw9IiMyYTU2YzYiIHBvaW50cz0iOS4zLDEzLjkgNi43LDEzLjkgNS4zLDExLjUgOC4wLDExLjUgOS4zLDEzLjkiLz48cG9seWdvbiBmaWxsPSIjMDA3OTZiIiBwb2ludHM9IjEwLjcsMTEuNSA5LjMsOS4yIDguMCwxMS41IDkuMywxMy45IDEwLjcsMTEuNSIvPjxwb2x5Z29uIGZpbGw9IiMwMDc5NmIiIHBvaW50cz0iMTMuMyw2LjkgMTIuMCw0LjYgMTAuNyw2LjkgMTMuMyw2LjkiLz48cG9seWdvbiBmaWxsPSIjMDA3OTZiIiBwb2ludHM9IjEzLjMsMi4zIDEyLjAsNC42IDEzLjMsNi45IDE0LjcsNC42IDEzLjMsMi4zIi8+PHBvbHlnb24gZmlsbD0iIzMzNjdkNiIgcG9pbnRzPSI2LjcsOS4yIDUuMyw2LjkgNC4wLDkuMiA2LjcsOS4yIi8+PHBvbHlnb24gZmlsbD0iIzI2YTY5YSIgcG9pbnRzPSIxMy4zLDYuOSAxMC43LDYuOSA5LjMsOS4yIDEyLjAsOS4yIDEzLjMsNi45Ii8+PHBvbHlnb24gZmlsbD0iIzI2YTY5YSIgcG9pbnRzPSIxNi4wLDYuOSAxMy4zLDYuOSAxMi4wLDkuMiAxNC43LDkuMiAxNi4wLDYuOSIvPjxwb2x5Z29uIGZpbGw9IiM5YzI3YjAiIHBvaW50cz0iMTguNywyLjMgMTcuMywwLjAgMTYuMCwyLjMgMTcuMyw0LjYgMTguNywyLjMiLz48cG9seWdvbiBmaWxsPSIjOWMyN2IwIiBwb2ludHM9IjIwLjAsNC42IDE4LjcsMi4zIDE3LjMsNC42IDE4LjcsNi45IDIwLjAsNC42Ii8+PHBvbHlnb24gZmlsbD0iIzljMjdiMCIgcG9pbnRzPSIyMS4zLDYuOSAyMC4wLDQuNiAxOC43LDYuOSAyMC4wLDkuMiAyMS4zLDYuOSIvPjxwb2x5Z29uIGZpbGw9IiM5YzI3YjAiIHBvaW50cz0iMjIuNiw5LjIgMjEuMyw2LjkgMjAuMCw5LjIgMjEuMywxMS41IDIyLjYsOS4yIi8+PHBvbHlnb24gZmlsbD0iIzljMjdiMCIgcG9pbnRzPSIyNC4wLDExLjUgMjIuNiw5LjIgMjEuMywxMS41IDIyLjYsMTMuOSAyNC4wLDExLjUiLz48cG9seWdvbiBmaWxsPSIjOWMyN2IwIiBwb2ludHM9IjIyLjYsMC4wIDIxLjMsMi4zIDIyLjYsNC42IDI0LjAsMi4zIDIyLjYsMC4wIi8+PHBvbHlnb24gZmlsbD0iIzljMjdiMCIgcG9pbnRzPSIyMC4wLDQuNiAyMS4zLDIuMyAyMi42LDQuNiAyMS4zLDYuOSAyMC4wLDQuNiIvPjxwb2x5Z29uIGZpbGw9IiM5YzI3YjAiIHBvaW50cz0iMTguNyw2LjkgMTcuMyw5LjIgMTguNywxMS41IDIwLjAsOS4yIDE4LjcsNi45Ii8+PHBvbHlnb24gZmlsbD0iIzljMjdiMCIgcG9pbnRzPSIxNy4zLDEzLjkgMTYuMCwxMS41IDE3LjMsOS4yIDE4LjcsMTEuNSAxNy4zLDEzLjkiLz48cG9seWdvbiBmaWxsPSIjNmExYjlhIiBwb2ludHM9IjE0LjcsMTMuOSAxMy4zLDExLjUgMTYuMCwxMS41IDE3LjMsMTMuOSAxNC43LDEzLjkiLz48cG9seWdvbiBmaWxsPSIjMDA2OTVjIiBwb2ludHM9IjEyLjAsOS4yIDkuMyw5LjIgMTAuNywxMS41IDEzLjMsMTEuNSAxMi4wLDkuMiIvPjxwb2x5Z29uIGZpbGw9IiMwMDY5NWMiIHBvaW50cz0iMTQuNyw5LjIgMTIuMCw5LjIgMTMuMywxMS41IDE0LjcsOS4yIi8+PHBvbHlnb24gZmlsbD0iIzAwNjk1YyIgcG9pbnRzPSIxNC43LDQuNiAxNi4wLDYuOSAxOC43LDYuOSAxNy4zLDQuNiAxNC43LDQuNiIvPjxwb2x5Z29uIGZpbGw9IiMwMDY5NWMiIHBvaW50cz0iMTYuMCwyLjMgMTMuMywyLjMgMTQuNyw0LjYgMTcuMyw0LjYgMTYuMCwyLjMiLz48cG9seWdvbiBmaWxsPSIjMDA2OTVjIiBwb2ludHM9IjIyLjYsMTMuOSAyMS4zLDExLjUgMTguNywxMS41IDIwLjAsMTMuOSAyMi42LDEzLjkiLz48cG9seWdvbiBmaWxsPSIjMDA2OTVjIiBwb2ludHM9IjIwLjAsOS4yIDE4LjcsMTEuNSAyMS4zLDExLjUgMjAuMCw5LjIiLz48cG9seWdvbiBmaWxsPSIjZWE4MGZjIiBwb2ludHM9IjE3LjMsMC4wIDE0LjcsMC4wIDEzLjMsMi4zIDE2LjAsMi4zIDE3LjMsMC4wIi8+PHBvbHlnb24gZmlsbD0iI2VhODBmYyIgcG9pbnRzPSIxNy4zLDkuMiAxNC43LDkuMiAxMy4zLDExLjUgMTYuMCwxMS41IDE3LjMsOS4yIi8+PHBvbHlnb24gZmlsbD0iI2VhODBmYyIgcG9pbnRzPSIxOC43LDYuOSAxNi4wLDYuOSAxNC43LDkuMiAxNy4zLDkuMiAxOC43LDYuOSIvPjxwb2x5Z29uIGZpbGw9IiNlYTgwZmMiIHBvaW50cz0iMjIuNiwwLjAgMjAuMCwwLjAgMTguNywyLjMgMjEuMywyLjMgMjIuNiwwLjAiLz48cG9seWdvbiBmaWxsPSIjZWE4MGZjIiBwb2ludHM9IjIwLjAsNC42IDE4LjcsMi4zIDIxLjMsMi4zIDIwLjAsNC42Ii8+PC9zdmc+" alt="JAX" />
+  <img src="https://img.shields.io/badge/JAX-05050A?style=for-the-badge&logo=data:image/svg%2Bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBvbHlnb24gZmlsbD0iIzVlOTdmNiIgcG9pbnRzPSI1LjAsMTEuOSAzLjEsMTUuNCA3LjAsMTUuNCA4LjksMTEuOSA1LjAsMTEuOSIvPjxwb2x5Z29uIGZpbGw9IiM1ZTk3ZjYiIHBvaW50cz0iMS4wLDE4LjggMy4xLDE1LjQgNy4wLDE1LjQgNS4wLDE4LjggMS4wLDE4LjgiLz48cG9seWdvbiBmaWxsPSIjNWU5N2Y2IiBwb2ludHM9IjExLjAsMTUuNCA3LjAsMTUuNCA1LjAsMTguOCA4LjksMTguOCAxMS4wLDE1LjQiLz48cG9seWdvbiBmaWxsPSIjNWU5N2Y2IiBwb2ludHM9IjE0LjksMTUuNCAxMS4wLDE1LjQgOC45LDE4LjggMTMuMCwxOC44IDE0LjksMTUuNCIvPjxwb2x5Z29uIGZpbGw9IiM1ZTk3ZjYiIHBvaW50cz0iMTMuMCwxMS45IDExLjAsMTUuNCAxNC45LDE1LjQgMTcuMCwxMS45IDEzLjAsMTEuOSIvPjxwb2x5Z29uIGZpbGw9IiM1ZTk3ZjYiIHBvaW50cz0iMTQuOSw4LjUgMTMuMCwxMS45IDE3LjAsMTEuOSAxOS4wLDguNSAxNC45LDguNSIvPjxwb2x5Z29uIGZpbGw9IiM1ZTk3ZjYiIHBvaW50cz0iMTcuMCw1LjAgMTQuOSw4LjUgMTkuMCw4LjUgMjAuOSw1LjAgMTcuMCw1LjAiLz48cG9seWdvbiBmaWxsPSIjNWU5N2Y2IiBwb2ludHM9IjE5LjAsMS42IDE3LjAsNS4wIDIwLjksNS4wIDIzLjAsMS42IDE5LjAsMS42Ii8+PHBvbHlnb24gZmlsbD0iIzJhNTZjNiIgcG9pbnRzPSIxLjAsMTguOCAzLjEsMjIuNCA3LjAsMjIuNCA1LjAsMTguOCAxLjAsMTguOCIvPjxwb2x5Z29uIGZpbGw9IiMyYTU2YzYiIHBvaW50cz0iMTEuMCwyMi40IDcuMCwyMi40IDUuMCwxOC44IDguOSwxOC44IDExLjAsMjIuNCIvPjxwb2x5Z29uIGZpbGw9IiMyYTU2YzYiIHBvaW50cz0iMTQuOSwyMi40IDExLjAsMjIuNCA4LjksMTguOCAxMy4wLDE4LjggMTQuOSwyMi40Ii8+PHBvbHlnb24gZmlsbD0iIzMzNjdkNiIgcG9pbnRzPSIxMS4wLDE1LjQgOC45LDExLjkgNy4wLDE1LjQgMTEuMCwxNS40Ii8+PC9zdmc+" alt="JAX" />
   <img src="https://img.shields.io/badge/Hugging_Face-05050A?style=for-the-badge&logo=huggingface" alt="Hugging Face" />
   <img src="https://img.shields.io/badge/Transformers-05050A?style=for-the-badge&logo=huggingface" alt="Transformers" />
   <img src="https://img.shields.io/badge/Diffusers-05050A?style=for-the-badge&logo=huggingface" alt="Diffusers" />
@@ -60,7 +60,7 @@
 </details>
 
 <details open>
-<summary><b>NEUROPORT</b> — <i>jacked in — agents & LLM stack</i></summary>
+<summary><b>NEUROPORT</b> — <i>the LLM and agent frameworks I plug into</i></summary>
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/LangChain-05050A?style=for-the-badge&logo=langchain" alt="LangChain" />
@@ -73,7 +73,7 @@
 </details>
 
 <details open>
-<summary><b>SANDEVISTAN</b> — <i>acceleration — GPU & compute</i></summary>
+<summary><b>SANDEVISTAN</b> — <i>GPU and distributed compute</i></summary>
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/CUDA-05050A?style=for-the-badge&logo=nvidia" alt="CUDA" />
@@ -85,7 +85,7 @@
 </details>
 
 <details open>
-<summary><b>OPERATING SYSTEM</b> — <i>the languages I think in</i></summary>
+<summary><b>OPERATING SYSTEM</b> — <i>the languages I write in</i></summary>
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/Python-05050A?style=for-the-badge&logo=python" alt="Python" />
@@ -102,7 +102,7 @@
 </details>
 
 <details open>
-<summary><b>SKELETON</b> — <i>load-bearing — embedded & firmware</i></summary>
+<summary><b>SKELETON</b> — <i>embedded systems and firmware</i></summary>
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/Embassy-05050A?style=for-the-badge&logo=rust" alt="Embassy" />
@@ -114,7 +114,7 @@
 </details>
 
 <details open>
-<summary><b>NERVOUS SYSTEM</b> — <i>the interface layer — apps & UI</i></summary>
+<summary><b>NERVOUS SYSTEM</b> — <i>apps, interfaces and the tests around them</i></summary>
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/React-05050A?style=for-the-badge&logo=react" alt="React" />
@@ -130,7 +130,7 @@
 </details>
 
 <details open>
-<summary><b>CIRCULATORY SYSTEM</b> — <i>what keeps it flowing — infra & delivery</i></summary>
+<summary><b>CIRCULATORY SYSTEM</b> — <i>infrastructure, deployment and automation</i></summary>
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/Docker-05050A?style=for-the-badge&logo=docker" alt="Docker" />
@@ -146,7 +146,7 @@
 </details>
 
 <details open>
-<summary><b>IMMUNE SYSTEM</b> — <i>threat detection — observability</i></summary>
+<summary><b>IMMUNE SYSTEM</b> — <i>observability and monitoring</i></summary>
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/OpenTelemetry-05050A?style=for-the-badge&logo=opentelemetry" alt="OpenTelemetry" />
@@ -158,7 +158,7 @@
 </details>
 
 <details open>
-<summary><b>SHARD SLOT</b> — <i>persistent storage — databases</i></summary>
+<summary><b>SHARD SLOT</b> — <i>databases and persistent storage</i></summary>
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/PostgreSQL-05050A?style=for-the-badge&logo=postgresql" alt="PostgreSQL" />
@@ -171,7 +171,7 @@
 </details>
 
 <details open>
-<summary><b>KIROSHI OPTICS</b> — <i>seeing the data — analysis & signal</i></summary>
+<summary><b>KIROSHI OPTICS</b> — <i>data analysis and signal processing</i></summary>
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/NumPy-05050A?style=for-the-badge&logo=numpy" alt="NumPy" />
@@ -188,7 +188,7 @@
 
 ---
 
-## <img src="./assets/icons/activity.svg" width="26" align="center" /> `//` NET ACTIVITY
+## <img src="./assets/icons/activity.svg" width="26" align="center" /> NET ACTIVITY
 
 <div align="center">
   <img src="./assets/activity-graph.svg" alt="Contribution activity graph" width="100%" />
@@ -204,7 +204,7 @@
 
 ---
 
-## <img src="./assets/icons/uplink.svg" width="26" align="center" /> `//` UPLINK
+## <img src="./assets/icons/uplink.svg" width="26" align="center" /> UPLINK
 
 <div align="center">
   <a href="https://github.com/dot-agi"><img src="https://img.shields.io/badge/GitHub-05050A?style=for-the-badge&logo=github" alt="GitHub" /></a>
