@@ -1,0 +1,15 @@
+{
+  "_comment": "Public repositories this profile has contributed to. Star counts and merged-PR counts are fetched live at render time, so this file only needs the repo list. Employer-org repositories are deliberately absent.",
+  "repos": [
+    { "owner": "NousResearch",     "name": "hermes-agent" },
+    { "owner": "Homebrew",         "name": "brew" },
+    { "owner": "Homebrew",         "name": "homebrew-core" },
+    { "owner": "openai",           "name": "openai-agents-python" },
+    { "owner": "QwenLM",           "name": "qwen-code" },
+    { "owner": "kortix-ai",        "name": "suna" },
+    { "owner": "AgentOps-AI",      "name": "agentops" },
+    { "owner": "harbor-framework", "name": "harbor" },
+    { "owner": "AgentOps-AI",      "name": "tokencost" },
+    { "owner": "arcprize",         "name": "ARC-AGI-3-Agents" }
+  ]
+}

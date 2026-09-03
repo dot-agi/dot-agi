@@ -41,6 +41,14 @@
 
 ---
 
+## `//` OPEN SOURCE
+
+<div align="center">
+  <img src="./assets/oss.svg" alt="Open source contributions" width="100%" />
+</div>
+
+---
+
 ## `//` CYBERWARE — INSTALLED MODULES
 
 <details open>
@@ -97,6 +105,7 @@
   <img src="https://img.shields.io/badge/TypeScript-05050A?style=for-the-badge&logo=typescript&logoColor=00F0FF" alt="TypeScript" />
   <img src="https://img.shields.io/badge/JavaScript-05050A?style=for-the-badge&logo=javascript&logoColor=00F0FF" alt="JavaScript" />
   <img src="https://img.shields.io/badge/Julia-05050A?style=for-the-badge&logo=julia&logoColor=00F0FF" alt="Julia" />
+  <img src="https://img.shields.io/badge/Ruby-05050A?style=for-the-badge&logo=ruby&logoColor=00F0FF" alt="Ruby" />
   <img src="https://img.shields.io/badge/MATLAB-05050A?style=for-the-badge&logoColor=00F0FF" alt="MATLAB" />
   <img src="https://img.shields.io/badge/LaTeX-05050A?style=for-the-badge&logo=latex&logoColor=00F0FF" alt="LaTeX" />
 </div>
@@ -135,6 +144,7 @@
 <br>
 <div align="center">
   <img src="https://img.shields.io/badge/Docker-05050A?style=for-the-badge&logo=docker&logoColor=00F0FF" alt="Docker" />
+  <img src="https://img.shields.io/badge/Homebrew-05050A?style=for-the-badge&logo=homebrew&logoColor=00F0FF" alt="Homebrew" />
   <img src="https://img.shields.io/badge/AWS-05050A?style=for-the-badge&logoColor=00F0FF" alt="AWS" />
   <img src="https://img.shields.io/badge/Google_Cloud-05050A?style=for-the-badge&logo=googlecloud&logoColor=00F0FF" alt="Google Cloud" />
   <img src="https://img.shields.io/badge/Airflow-05050A?style=for-the-badge&logo=apacheairflow&logoColor=00F0FF" alt="Airflow" />
