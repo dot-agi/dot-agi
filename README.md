@@ -3,13 +3,13 @@
 </div>
 
 <div align="center">
-  <img src="https://komarev.com/ghpvc/?username=dot-agi&style=for-the-badge&color=05050A&label=NETWATCH+SCANS" alt="Profile views" />
-  <a href="https://github.com/dot-agi?tab=followers"><img src="https://img.shields.io/github/followers/dot-agi?style=for-the-badge&color=05050A&labelColor=0A0A12&label=STREET+CRED&logo=github" alt="Followers" /></a>
+  <img src="https://hits.sh/github.com/dot-agi.svg?style=for-the-badge&label=NETWATCH+SCANS&extraCount=3362&color=1A5561&labelColor=05050A&logo=data:image/svg%2Bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTIgOFYyaDZNMjIgOFYyaC02TTIgMTZ2Nmg2TTIyIDE2djZoLTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwRjBGRiIgc3Ryb2tlLXdpZHRoPSIyLjYiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSI0LjIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwRjBGRiIgc3Ryb2tlLXdpZHRoPSIyLjYiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxLjUiIGZpbGw9IiMwMEYwRkYiLz48L3N2Zz4K" alt="Profile views" />
+  <a href="https://github.com/dot-agi?tab=followers"><img src="https://img.shields.io/github/followers/dot-agi?style=for-the-badge&color=FCEE0A&labelColor=05050A&label=STREET+CRED&logo=github&logoColor=FCEE0A" alt="Followers" /></a>
 </div>
 
 ---
 
-## <img src="./assets/icons/dossier.svg" width="26" align="center" /> DOSSIER
+## <img src="./assets/headings/dossier.svg" alt="DOSSIER" width="460" />
 
 > I work at both ends of the stack. Days go into post-training data and evaluation
 > infrastructure for frontier models; nights go into bare-metal firmware for hardware
@@ -33,7 +33,7 @@
 
 ---
 
-## <img src="./assets/icons/attributes.svg" width="26" align="center" /> ATTRIBUTES
+## <img src="./assets/headings/attributes.svg" alt="ATTRIBUTES" width="460" />
 
 <div align="center">
   <img src="./assets/attributes.svg" alt="Contribution attributes" width="100%" />
@@ -41,7 +41,7 @@
 
 ---
 
-## <img src="./assets/icons/cyberware.svg" width="26" align="center" /> CYBERWARE
+## <img src="./assets/headings/cyberware.svg" alt="CYBERWARE" width="460" />
 
 <details open>
 <summary><b>FRONTAL CORTEX</b> — <i>model training and inference</i></summary>
@@ -56,6 +56,8 @@
   <img src="https://img.shields.io/badge/OpenCV-05050A?style=for-the-badge&logo=opencv" alt="OpenCV" />
   <img src="https://img.shields.io/badge/ONNX-05050A?style=for-the-badge&logo=onnx" alt="ONNX" />
   <img src="https://img.shields.io/badge/Flux.jl-05050A?style=for-the-badge&logo=julia" alt="Flux.jl" />
+  <img src="https://img.shields.io/badge/Weights_%26_Biases-05050A?style=for-the-badge&logo=weightsandbiases" alt="Weights & Biases" />
+  <img src="https://img.shields.io/badge/MLflow-05050A?style=for-the-badge&logo=mlflow" alt="MLflow" />
 </div>
 </details>
 
@@ -65,10 +67,8 @@
 <div align="center">
   <img src="https://img.shields.io/badge/LangChain-05050A?style=for-the-badge&logo=langchain" alt="LangChain" />
   <img src="https://img.shields.io/badge/LangGraph-05050A?style=for-the-badge&logo=langgraph" alt="LangGraph" />
-  <img src="https://img.shields.io/badge/Anthropic-05050A?style=for-the-badge&logo=anthropic" alt="Anthropic" />
-  <img src="https://img.shields.io/badge/Mistral-05050A?style=for-the-badge&logo=mistralai" alt="Mistral" />
   <img src="https://img.shields.io/badge/vLLM-05050A?style=for-the-badge&logo=vllm" alt="vLLM" />
-  <img src="https://img.shields.io/badge/Ollama-05050A?style=for-the-badge&logo=ollama" alt="Ollama" />
+  <img src="https://img.shields.io/badge/Gradio-05050A?style=for-the-badge&logo=gradio" alt="Gradio" />
 </div>
 </details>
 
@@ -109,7 +109,6 @@
   <img src="https://img.shields.io/badge/ARM_Cortex--M-05050A?style=for-the-badge&logo=arm" alt="ARM Cortex-M" />
   <img src="https://img.shields.io/badge/Cargo-05050A?style=for-the-badge&logo=rust" alt="Cargo" />
   <img src="https://img.shields.io/badge/defmt-05050A?style=for-the-badge&logo=rust" alt="defmt" />
-  <img src="https://img.shields.io/badge/Bluetooth_LE-05050A?style=for-the-badge&logo=bluetooth" alt="Bluetooth LE" />
 </div>
 </details>
 
@@ -188,7 +187,7 @@
 
 ---
 
-## <img src="./assets/icons/activity.svg" width="26" align="center" /> NET ACTIVITY
+## <img src="./assets/headings/activity.svg" alt="NET ACTIVITY" width="460" />
 
 <div align="center">
   <img src="./assets/activity-graph.svg" alt="Contribution activity graph" width="100%" />
@@ -199,16 +198,18 @@
 </div>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/dot-agi/dot-agi/output/github-contribution-grid-snake-dark.svg" alt="Contribution snake" width="100%" />
+  <img src="./assets/breach.svg" alt="Breach protocol contribution matrix" width="100%" />
 </div>
 
 ---
 
-## <img src="./assets/icons/uplink.svg" width="26" align="center" /> UPLINK
+## <img src="./assets/headings/uplink.svg" alt="UPLINK" width="460" />
 
 <div align="center">
   <a href="https://github.com/dot-agi"><img src="https://img.shields.io/badge/GitHub-05050A?style=for-the-badge&logo=github" alt="GitHub" /></a>
   <a href="https://x.com/prattybhai"><img src="https://img.shields.io/badge/X-05050A?style=for-the-badge&logo=x" alt="X" /></a>
+  <a href="https://linkedin.com/in/prattyagi"><img src="https://img.shields.io/badge/LinkedIn-05050A?style=for-the-badge&logo=data:image/svg%2Bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMDA3NmIyIiBkPSJNMTE2IDNIMTJhOC45MSA4LjkxIDAgMDAtOSA4Ljh2MTA0LjQyYTguOTEgOC45MSAwIDAwOSA4Ljc4aDEwNGE4LjkzIDguOTMgMCAwMDktOC44MVYxMS43N0E4LjkzIDguOTMgMCAwMDExNiAzeiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0yMS4wNiA0OC43M2gxOC4xMVYxMDdIMjEuMDZ6bTkuMDYtMjlhMTAuNSAxMC41IDAgMTEtMTAuNSAxMC40OSAxMC41IDEwLjUgMCAwMTEwLjUtMTAuNDlNNTAuNTMgNDguNzNoMTcuMzZ2OGguMjRjMi40Mi00LjU4IDguMzItOS40MSAxNy4xMy05LjQxQzEwMy42IDQ3LjI4IDEwNyA1OS4zNSAxMDcgNzV2MzJIODguODlWNzguNjVjMC02Ljc1LS4xMi0xNS40NC05LjQxLTE1LjQ0cy0xMC44NyA3LjM2LTEwLjg3IDE1VjEwN0g1MC41M3oiLz48L3N2Zz4=" alt="LinkedIn" /></a>
+  <a href="https://ccwarriors.xyz/dot-agi"><img src="https://img.shields.io/badge/CCWarriors-05050A?style=for-the-badge&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAADTElEQVR42u3dra1CMQCG4bMJoyAQkGAJijEQzMIASAwCj2YHHIodygIgStvQn+dJPnvv7cnpa0i40wQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQIMez1eImScGAgAIACAAgAAAAgC0HoDj6fJxnhgIACAAgAAAAgAIACnuh10w+3UCIAAmAAIgACYAAiAAJgACIAAmAAIgACYAAiAAJgACIAAmAAIgACYAAiAAJgACIAAmAAIgACYAAiAAJgACIAAmAAIgACYACIAJAAJgAoAAmAAgACYACIAJAAJgAoAAmAAgACYACIAJAP8NgCD1/TwFQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQAAEQABGCMBivQ05JgACIAACIAACIAACIAACIAACIAACIAACIAACIAACIAACIAC1XfTz9ZZlucIgAAJQ4u+Zrzah5ARAAARAAARAAARAAARAAARAAARAAARAAARAAARAANoKwLcHHBsAl8Rq3n45i9owHwMKgAmAAAiACYAACIAJgAAIgAmAAAiACUAnAcj1IAXABEAABMAEQAAEwARAAATABEAAzARAAMwEwMeAZgIgAGYCIABmAiAAZgIgAGYCIABmAtDHV4J5yazmdffVXwJgJgACYCYAAmAmAAJgJgACYDZoAHKFofV/D259b0IATAAQABMABMAEAAEwAUAATABICEPp3+slNgEQADMBEAAzARAAMwEQADMBEAAzAeiVl9gEQADMBEAAzARAAMwEQADMBEAAzARAAMwEQADMBEAAzARAAEwAEAATAATABABSAlPbz3decCGcF1wI5wUXwnnBhXBecCEEAFwIAQABEAAQAAEAARAABEAABAABEAABQAAEQAAQAAEQAARAAAQAARAAAUAABEAAEAABEAAEQAAEAAEQAAFAAARAABAAARAABEAABAABEAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIBKvQHpCvPeGMgxogAAAABJRU5ErkJggg==" alt="CCWarriors" /></a>
 </div>
 
 <div align="center">

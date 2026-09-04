@@ -20,7 +20,7 @@ export const C = {
   text: '#D7F7FA',
 };
 
-/** Contribution ramp, shared by the 3D graph and the snake. */
+/** Contribution ramp, shared by the 3D graph and the breach matrix. */
 export const RAMP = ['#12161C', '#1A5561', '#00A5B5', '#00F0FF', '#FCEE0A'];
 
 /**
