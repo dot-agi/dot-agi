@@ -60,7 +60,18 @@ export function sharedDefs() {
 <pattern id="hazard" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
 <rect width="9" height="18" fill="${C.yellow}"/>
 <rect x="9" width="9" height="18" fill="${C.void}"/>
+<animateTransform attributeName="patternTransform" type="translate" additive="sum" from="0 0" to="-18 0" dur="2.4s" repeatCount="indefinite"/>
 </pattern>
+<linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0%" stop-color="${C.cyan}" stop-opacity="0"/>
+<stop offset="50%" stop-color="${C.cyan}" stop-opacity="0.55"/>
+<stop offset="100%" stop-color="${C.cyan}" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="charge" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+<stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.75"/>
+<stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+</linearGradient>
 <filter id="glow" x="-8%" y="-40%" width="116%" height="180%">
 <feGaussianBlur stdDeviation="4" result="b"/>
 <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
@@ -97,7 +108,7 @@ export function scanlines(W, H) {
 
 /** A section heading in the recurring "// LABEL" HUD idiom. */
 export function heading(label, { x, y, rule = 0 }) {
-  return `<text class="mono" x="${x}" y="${y}" font-size="14" fill="${C.cyan}" letter-spacing="1.5">// ${esc(label)}</text>` +
+  return `<text class="mono" x="${x}" y="${y}" font-size="13" fill="${C.cyan}" letter-spacing="1.5">// ${esc(label)}</text>` +
     (rule ? `<rect x="${x}" y="${y + 10}" width="${rule}" height="2" fill="${C.yellow}" opacity="0.65"/>` : '');
 }
 
@@ -144,4 +155,52 @@ export function glitchBlocks(x, y, w, seed) {
     const colour = next() % 2 ? C.cyan : C.magenta;
     return `<rect x="${bx}" y="${by}" width="${bw}" height="2" fill="${colour}" opacity="0.55"/>`;
   }).join('');
+}
+
+
+/**
+ * The HUD's recurring "live" vocabulary.
+ *
+ * Cyberpunk's interfaces are never still: a scan pass crawls over every panel,
+ * RAM pips charge and drain while a quickhack uploads, and chevrons chase to
+ * say something is working. SMIL plays inside a README <img>, so these animate
+ * on GitHub without a GIF host. Every id a caller passes must be unique within
+ * its file, since one SVG is one document.
+ */
+
+/** A band of light crawling across a region, clipped to it. */
+export function scanSweep(id, x, y, w, h, { dur = '5.5s', band = 260, delay = '0s', opacity = 0.13 } = {}) {
+  return `<clipPath id="${id}"><rect x="${fmt(x)}" y="${fmt(y)}" width="${fmt(w)}" height="${fmt(h)}"/></clipPath>
+<g clip-path="url(#${id})">
+<rect x="0" y="${fmt(y)}" width="${band}" height="${fmt(h)}" fill="url(#sweep)" opacity="${opacity}">
+<animate attributeName="x" values="${fmt(x - band)};${fmt(x + w)}" dur="${dur}" begin="${delay}" repeatCount="indefinite"/>
+</rect>
+</g>`;
+}
+
+/** The netrunner RAM meter: pips that charge in sequence, then drain together. */
+export function ramPips(x, y, count, { size = 9, gap = 4, dur = 4 } = {}) {
+  const step = dur / (count + 3);
+  return Array.from({ length: count }, (_, i) => {
+    const on = fmt((i + 1) * step / dur);
+    return `<rect x="${fmt(x + i * (size + gap))}" y="${y}" width="${size}" height="${size}" fill="${C.cyan}" opacity="0.15"/>` +
+      `<rect x="${fmt(x + i * (size + gap))}" y="${y}" width="${size}" height="${size}" fill="${C.cyan}" opacity="0">` +
+      `<animate attributeName="opacity" values="0;0;0.95;0.95;0" keyTimes="0;${on};${fmt(on + 0.02)};0.88;0.94" ` +
+      `dur="${dur}s" repeatCount="indefinite"/></rect>`;
+  }).join('');
+}
+
+/** Chevrons chasing forward -- the game's "in progress" tell. */
+export function chevrons(x, y, count, { size = 7, gap = 5, dur = 1.5, colour = C.cyan } = {}) {
+  return Array.from({ length: count }, (_, i) => {
+    const cx = x + i * (size + gap);
+    return `<path d="M${fmt(cx)} ${fmt(y - size / 2)}l${fmt(size / 2)} ${fmt(size / 2)}l${fmt(-size / 2)} ${fmt(size / 2)}" ` +
+      `fill="none" stroke="${colour}" stroke-width="2" stroke-linecap="square" opacity="0.25">` +
+      `<animate attributeName="opacity" values="0.25;1;0.25" dur="${dur}s" begin="${fmt(i * dur / count / 2)}s" repeatCount="indefinite"/></path>`;
+  }).join('');
+}
+
+/** An occasional signal-drop blink, for text that should feel transmitted. */
+export function flicker(dur = 7) {
+  return `<animate attributeName="opacity" values="1;1;0.25;1;0.6;1;1" keyTimes="0;0.72;0.735;0.75;0.765;0.78;1" dur="${dur}s" repeatCount="indefinite"/>`;
 }

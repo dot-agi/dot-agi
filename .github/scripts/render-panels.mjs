@@ -14,7 +14,7 @@
 
 import { writeFile, mkdir } from 'node:fs/promises';
 import { C, RAMP, loadFonts, fontCss, sharedDefs, corners, glitch, scanlines, heading,
-         breachGrid, glitchBlocks, fmt, esc } from './lib/theme.mjs';
+         breachGrid, glitchBlocks, scanSweep, ramPips, chevrons, flicker, fmt, esc } from './lib/theme.mjs';
 
 const token = process.env.GITHUB_TOKEN;
 const username = process.env.USERNAME;
@@ -25,7 +25,7 @@ const outDir = process.env.OUT_DIR || 'assets';
  *
  * GitHub renders a README image into a column roughly 900px wide, and the
  * panels are emitted at `width="100%"`. Drawing at this width means one SVG
- * unit is one rendered pixel: a `font-size="14"` here is 14px on the page. The
+ * unit is one rendered pixel: a `font-size="13"` here is 14px on the page. The
  * panels used to be drawn 1280 wide and scaled down by 0.7, which quietly
  * shrank every label to about two thirds of its stated size.
  */
@@ -159,7 +159,7 @@ ${scanlines(W, H)}
 /** Masthead: name, handle and role, framed like a character-select screen. */
 function hero() {
   const W = CANVAS;
-  const H = 312;
+  const H = 336;
   const display = (user.name || user.login).toUpperCase();
   const rows = [
     ['CLASS', 'NETRUNNER'],
@@ -170,8 +170,8 @@ function hero() {
   const info = rows
     .map(([k, v], i) => {
       const y = 152 + i * 38;
-      return `<text class="mono" x="${colX}" y="${y}" font-size="15" fill="${C.muted}" letter-spacing="1.5">${k}</text>` +
-        `<text class="mono" x="${W - M}" y="${y}" font-size="16" fill="${C.cyan}" text-anchor="end" letter-spacing="1">${esc(v)}</text>` +
+      return `<text class="mono" x="${colX}" y="${y}" font-size="13" fill="${C.muted}" letter-spacing="1.5">${k}</text>` +
+        `<text class="mono" x="${W - M}" y="${y}" font-size="14" fill="${C.cyan}" text-anchor="end" letter-spacing="1">${esc(v)}</text>` +
         `<rect x="${colX}" y="${y + 11}" width="${W - M - colX}" height="1" fill="${C.grid}"/>`;
     })
     .join('\n');
@@ -184,14 +184,19 @@ function hero() {
 ${breachGrid(colX, 62, 10, 2, seed, 27)}
 <rect x="${M}" y="48" width="264" height="18" fill="url(#hazard)" opacity="0.85"/>
 ${glitchBlocks(M, 92, 320, seed + 13)}
-<text class="jp" x="${M + 22}" y="278" font-size="17" fill="${C.magenta}" opacity="0.85" letter-spacing="4">サイバーパンク</text>
-<text class="jp" x="${W - M - 26}" y="278" font-size="17" fill="${C.cyan}" opacity="0.7" text-anchor="end" letter-spacing="4">ナイトシティ</text>
-${glitch(display, { x: M, y: 132, size: 60 })}
+<text class="jp" x="${M + 22}" y="302" font-size="15" fill="${C.magenta}" opacity="0.85" letter-spacing="4">サイバーパンク</text>
+<text class="jp" x="${W - M - 26}" y="302" font-size="15" fill="${C.cyan}" opacity="0.7" text-anchor="end" letter-spacing="4">ナイトシティ</text>
+<text class="mono" x="${colX}" y="270" font-size="14" fill="${C.muted}" letter-spacing="1.5">RAM</text>
+${ramPips(colX + 52, 259, 12, { size: 10, gap: 5, dur: 4.4 })}
+<rect x="${colX}" y="281" width="${W - M - colX}" height="1" fill="${C.grid}"/>
+${glitch(display, { x: M, y: 132, size: 56 })}
 <rect x="${M}" y="150" width="250" height="3" fill="${C.yellow}"/>
-<text class="mono" x="${M}" y="188" font-size="19" fill="${C.cyan}" letter-spacing="2">@${esc(user.login)}</text>
-<text class="display" x="${M}" y="226" font-size="28" fill="${C.text}" letter-spacing="2">ONLY THE BEST SURVIVE</text>
-<text class="mono" x="${M}" y="250" font-size="14" fill="${C.muted}" letter-spacing="1.2">SCALABLE SYSTEMS &lt;&gt; AI RESEARCH &lt;&gt; OPEN TO COLLAB</text>
+<text class="mono" x="${M}" y="188" font-size="17" fill="${C.cyan}" letter-spacing="2">@${esc(user.login)}${flicker(9)}</text>
+<text class="display" x="${M}" y="226" font-size="26" fill="${C.text}" letter-spacing="2">ONLY THE BEST SURVIVE</text>
+<text class="mono" x="${M}" y="250" font-size="13" fill="${C.muted}" letter-spacing="1.2">SCALABLE SYSTEMS &lt;&gt; AI RESEARCH &lt;&gt; OPEN TO COLLAB</text>
 ${info}
+${chevrons(M, 268, 4, { dur: 1.8, colour: C.yellow })}
+${scanSweep('heroScan', 16, 16, W - 32, H - 32, { dur: '7s', band: 300, opacity: 0.1 })}
 `);
 }
 
@@ -275,13 +280,21 @@ function headingBanners() {
     out[`${slug}.svg`] =
       `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">
 <title>${esc(label)}</title>
-<defs><style>${fontCss(fonts)}</style></defs>
+<defs><style>${fontCss(fonts)}</style>
+<linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0%" stop-color="${C.cyan}" stop-opacity="0"/>
+<stop offset="50%" stop-color="${C.cyan}" stop-opacity="0.5"/>
+<stop offset="100%" stop-color="${C.cyan}" stop-opacity="0"/>
+</linearGradient></defs>
 <path d="${plate}" fill="${C.panel}"/>
-<rect x="0" y="0" width="5" height="${H}" fill="${C.yellow}"/>
+<rect x="0" y="0" width="5" height="${H}" fill="${C.yellow}">
+<animate attributeName="fill" values="${C.yellow};${C.cyan};${C.yellow}" dur="${fmt(3.4 + i * 0.4)}s" repeatCount="indefinite"/>
+</rect>
+${scanSweep(`plate${i}`, 5, 0, W - 5, H, { dur: `${fmt(4.6 + i * 0.5)}s`, band: 210, opacity: 0.16 })}
 <g transform="translate(18,8) scale(0.882)">${icons[slug]}</g>
-<text class="display" x="60" y="33" font-size="28" fill="${C.yellow}" letter-spacing="2.5">${esc(label)}</text>
-<text class="mono" x="${W - 20}" y="31" font-size="15" fill="${C.cyan}" text-anchor="end" letter-spacing="1.5" opacity="0.75">[ ${index} ]</text>
-${[0, 1, 2].map((k) => `<rect x="${W - 170 + k * 16}" y="21" width="8" height="4" fill="${C.grid}"/>`).join('')}
+<text class="display" x="60" y="33" font-size="26" fill="${C.yellow}" letter-spacing="2.5">${esc(label)}${flicker(8 + i)}</text>
+<text class="mono" x="${W - 20}" y="31" font-size="13" fill="${C.cyan}" text-anchor="end" letter-spacing="1.5" opacity="0.75">[ ${index} ]</text>
+${chevrons(W - 160, 23, 3, { dur: 1.6 })}
 </svg>
 `;
   });
@@ -306,6 +319,42 @@ function attributes() {
 
   // Stars measure how popular work is, not how capable its author is, so they
   // sit in the cred row below rather than scoring an attribute here.
+  /**
+   * The five marks from the game's character sheet, redrawn in this palette at
+   * 22x22 and each animated on its own cycle so the sheet reads as live.
+   */
+  const GLYPHS = {
+    // Technical ability: a hex nut with a turning core.
+    'TECHNICAL ABILITY':
+      `<path d="M11 1l8.7 5v10L11 21l-8.7-5V6z" fill="none" stroke="${C.cyan}" stroke-width="2"/>` +
+      `<circle cx="11" cy="11" r="3.4" fill="none" stroke="${C.yellow}" stroke-width="2">` +
+      `<animateTransform attributeName="transform" type="rotate" from="0 11 11" to="360 11 11" dur="6s" repeatCount="indefinite"/></circle>`,
+    // Intelligence: a chip node with traces firing outward.
+    INTELLIGENCE:
+      `<rect x="6" y="6" width="10" height="10" fill="none" stroke="${C.cyan}" stroke-width="2"/>` +
+      `<rect x="9.5" y="9.5" width="3" height="3" fill="${C.yellow}">` +
+      `<animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite"/></rect>` +
+      ['M11 1v5', 'M11 16v5', 'M1 11h5', 'M16 11h5']
+        .map((d, k) => `<path d="${d}" stroke="${C.yellow}" stroke-width="2" stroke-linecap="round">` +
+          `<animate attributeName="opacity" values="0.2;1;0.2" dur="2s" begin="${k * 0.25}s" repeatCount="indefinite"/></path>`)
+        .join(''),
+    // Reflexes: a bolt that strikes.
+    REFLEXES:
+      `<path d="M13 1L4 12h5l-2 9 9-11h-5z" fill="${C.yellow}" stroke="${C.yellow}" stroke-width="1.5" stroke-linejoin="round">` +
+      `<animate attributeName="opacity" values="1;0.35;1;1" keyTimes="0;0.08;0.16;1" dur="2.2s" repeatCount="indefinite"/></path>`,
+    // Cool: a plume rising off a steady base.
+    COOL:
+      `<path d="M11 21c-5 0-7-3-7-6 0-4 4-5 4-9 3 2 4 4 4 6 1-1 1.5-2 1.5-3.5 2 2 4 4.5 4 7.5 0 3-2 5-6.5 5z" ` +
+      `fill="none" stroke="${C.cyan}" stroke-width="2" stroke-linejoin="round"/>` +
+      `<path d="M11 18c-2 0-2.6-1.4-2.6-2.6 0-1.8 2.6-3.4 2.6-3.4s2.6 1.6 2.6 3.4C13.6 16.6 13 18 11 18z" fill="${C.yellow}">` +
+      `<animate attributeName="opacity" values="0.45;1;0.45" dur="1.9s" repeatCount="indefinite"/></path>`,
+    // Body: a plated shield with a beating core.
+    BODY:
+      `<path d="M11 1l9 3v8c0 5-4 8-9 10-5-2-9-5-9-10V4z" fill="none" stroke="${C.cyan}" stroke-width="2" stroke-linejoin="round"/>` +
+      `<path d="M11 6v10M6 11h10" stroke="${C.yellow}" stroke-width="2.4" stroke-linecap="round">` +
+      `<animate attributeName="opacity" values="0.5;1;0.5" dur="1.4s" repeatCount="indefinite"/></path>`,
+  };
+
   const attrs = [
     ['TECHNICAL ABILITY', 'DISTINCT LANGUAGES SHIPPED', languages.size, 20],
     ['INTELLIGENCE', 'PRS MERGED INTO OTHERS\' REPOS', externalMerged, 500],
@@ -332,11 +381,22 @@ function attributes() {
         const colour = !on ? '#101820' : sIdx >= LEVELS - 3 ? C.yellow : C.cyan;
         return `<rect x="${fmt(barX + sIdx * pitch)}" y="${y - 16}" width="${segW}" height="20" fill="${colour}" opacity="${on ? 1 : 0.55}"/>`;
       }).join('');
-      return `<text class="display" x="${M}" y="${y}" font-size="26" fill="${C.text}" letter-spacing="1">${name}</text>` +
-        `<text class="mono" x="${M}" y="${y + 21}" font-size="14" fill="${C.muted}" letter-spacing="1">${source}</text>` +
-        bar +
-        `<text class="display" x="${W - M}" y="${y}" font-size="28" fill="${C.yellow}" text-anchor="end">LV ${lv}</text>` +
-        `<text class="mono" x="${W - M}" y="${y + 21}" font-size="15" fill="${C.text}" text-anchor="end" letter-spacing="1">${value}</text>`;
+      // A charge runs the length of the lit segments, clipped to them so it
+      // never leaks into the empty part of the track.
+      const litW = lv * pitch;
+      const charge = `<clipPath id="lit${i}">` +
+        Array.from({ length: lv }, (_, sIdx) =>
+          `<rect x="${fmt(barX + sIdx * pitch)}" y="${y - 16}" width="${segW}" height="20"/>`).join('') +
+        `</clipPath>
+<g clip-path="url(#lit${i})"><rect x="0" y="${y - 16}" width="70" height="20" fill="url(#charge)" opacity="0.55">` +
+        `<animate attributeName="x" values="${fmt(barX - 70)};${fmt(barX + litW)}" dur="${fmt(3.6 + i * 0.35)}s" repeatCount="indefinite"/></rect></g>`;
+      const textX = M + 32;
+      return `<g transform="translate(${M},${y - 18})">${GLYPHS[name]}</g>` +
+        `<text class="display" x="${textX}" y="${y}" font-size="24" fill="${C.text}" letter-spacing="1">${name}</text>` +
+        `<text class="mono" x="${textX}" y="${y + 21}" font-size="13" fill="${C.muted}" letter-spacing="1">${source}</text>` +
+        bar + charge +
+        `<text class="display" x="${W - M}" y="${y}" font-size="26" fill="${C.yellow}" text-anchor="end">LV ${lv}</text>` +
+        `<text class="mono" x="${W - M}" y="${y + 21}" font-size="13" fill="${C.text}" text-anchor="end" letter-spacing="1">${value}</text>`;
     })
     .join('\n');
 
@@ -351,15 +411,15 @@ function attributes() {
     .map(([label, value, sub], i) => {
       const x = M + i * credW;
       return `<rect x="${fmt(x)}" y="${H - 112}" width="${fmt(credW - 18)}" height="2" fill="${C.cyan}" opacity="0.5"/>` +
-        `<text class="mono" x="${fmt(x)}" y="${H - 92}" font-size="15" fill="${C.cyan}" letter-spacing="1.5">${label}</text>` +
-        `<text class="display" x="${fmt(x)}" y="${H - 58}" font-size="32" fill="${C.yellow}">${value}</text>` +
-        `<text class="mono" x="${fmt(x)}" y="${H - 38}" font-size="13" fill="${C.muted}" letter-spacing="1">${sub}</text>`;
+        `<text class="mono" x="${fmt(x)}" y="${H - 92}" font-size="13" fill="${C.cyan}" letter-spacing="1.5">${label}</text>` +
+        `<text class="display" x="${fmt(x)}" y="${H - 58}" font-size="30" fill="${C.yellow}">${value}</text>` +
+        `<text class="mono" x="${fmt(x)}" y="${H - 38}" font-size="12" fill="${C.muted}" letter-spacing="1">${sub}</text>`;
     })
     .join('\n');
 
   return panel(W, H, `${user.login} attributes`, `
 ${heading('CHARACTER SHEET', { x: M, y: 62, rule: 190 })}
-<text class="mono" x="${W - M}" y="62" font-size="13" fill="${C.muted}" text-anchor="end" letter-spacing="1">LEVEL / 20 &lt;&gt; LOG-SCORED</text>
+<text class="mono" x="${W - M}" y="62" font-size="12" fill="${C.muted}" text-anchor="end" letter-spacing="1">LEVEL / 20 &lt;&gt; LOG-SCORED</text>
 <line x1="${M}" y1="88" x2="${W - M}" y2="88" stroke="${C.grid}" stroke-width="1"/>
 ${rows}
 ${credRow}
@@ -401,7 +461,7 @@ function activityGraph() {
   const grid = Array.from({ length: gridCount + 1 }, (_, i) => {
     const y = yAt(gridStep * i);
     return `<line x1="${PAD.left}" y1="${fmt(y)}" x2="${W - PAD.right}" y2="${fmt(y)}" stroke="${C.grid}" stroke-width="1" stroke-dasharray="2 6"/>` +
-      `<text class="mono" x="${PAD.left - 12}" y="${fmt(y + 5)}" font-size="14" fill="${C.muted}" text-anchor="end">${(gridStep * i).toFixed(decimals)}</text>`;
+      `<text class="mono" x="${PAD.left - 12}" y="${fmt(y + 5)}" font-size="13" fill="${C.muted}" text-anchor="end">${(gridStep * i).toFixed(decimals)}</text>`;
   }).join('\n');
 
   const ticks = [];
@@ -432,30 +492,40 @@ function activityGraph() {
       // size the counts use, so it drops to the mono face at a smaller size.
       const wide = value.length > 8;
       return `<rect x="${fmt(x)}" y="128" width="${fmt(cellW - 16)}" height="2" fill="${C.cyan}" opacity="0.5"/>` +
-        `<text class="mono" x="${fmt(x)}" y="148" font-size="14" fill="${C.cyan}" letter-spacing="1.2">${label}</text>` +
+        `<text class="mono" x="${fmt(x)}" y="148" font-size="13" fill="${C.cyan}" letter-spacing="1.2">${label}</text>` +
         (wide
-          ? `<text class="mono" x="${fmt(x)}" y="178" font-size="19" fill="${C.yellow}" letter-spacing="0.5">${esc(value)}</text>`
-          : `<text class="display" x="${fmt(x)}" y="180" font-size="32" fill="${C.yellow}" letter-spacing="1">${esc(value)}</text>`);
+          ? `<text class="mono" x="${fmt(x)}" y="178" font-size="17" fill="${C.yellow}" letter-spacing="0.5">${esc(value)}</text>`
+          : `<text class="display" x="${fmt(x)}" y="180" font-size="30" fill="${C.yellow}" letter-spacing="1">${esc(value)}</text>`);
     })
     .join('\n');
 
   return panel(W, H, `${username} contribution activity, 7-day average, ${range}`, `
 ${ticks.map((t) => `<line x1="${fmt(t.x)}" y1="${PAD.top - 12}" x2="${fmt(t.x)}" y2="${baseline}" stroke="${C.grid}" stroke-width="1" opacity="0.6"/>`).join('\n')}
-${glitch(username.toUpperCase(), { x: M, y: 70, size: 46 })}
+${glitch(username.toUpperCase(), { x: M, y: 70, size: 42 })}
 <rect x="${M}" y="84" width="170" height="3" fill="${C.yellow}"/>
-<text class="mono" x="${M}" y="110" font-size="14" fill="${C.cyan}" letter-spacing="1.2">CONTRIBUTION ACTIVITY &lt;&gt; 7-DAY AVG</text>
+<text class="mono" x="${M}" y="110" font-size="13" fill="${C.cyan}" letter-spacing="1.2">CONTRIBUTION ACTIVITY &lt;&gt; 7-DAY AVG</text>
 <rect x="${W - 232}" y="36" width="200" height="16" fill="url(#hazard)" opacity="0.85"/>
-<text class="mono" x="${W - M}" y="80" font-size="16" fill="${C.yellow}" text-anchor="end" letter-spacing="1">${esc(range)}</text>
-<text class="mono" x="${W - M}" y="108" font-size="13" fill="${C.muted}" text-anchor="end" letter-spacing="0.5">SYS://GITHUB.CONTRIB.CAL &gt;&gt; ONLINE</text>
+<text class="mono" x="${W - M}" y="80" font-size="14" fill="${C.yellow}" text-anchor="end" letter-spacing="1">${esc(range)}</text>
+<text class="mono" x="${W - M}" y="108" font-size="12" fill="${C.muted}" text-anchor="end" letter-spacing="0.5">SYS://GITHUB.CONTRIB.CAL &gt;&gt; ONLINE</text>
+<circle cx="${W - 268}" cy="104" r="4" fill="${C.magenta}">
+<animate attributeName="opacity" values="1;1;0.15;0.15" keyTimes="0;0.5;0.55;1" dur="1.8s" repeatCount="indefinite"/>
+</circle>
 ${cells}
 ${grid}
 <line x1="${PAD.left}" y1="${baseline}" x2="${W - PAD.right}" y2="${baseline}" stroke="${C.cyan}" stroke-width="1" opacity="0.55"/>
 <path d="${area}" fill="url(#areaFill)"/>
 <path d="${line}" fill="none" stroke="${C.magenta}" stroke-width="2.5" opacity="0.55" transform="translate(-2.5,2)"/>
 <path d="${line}" fill="none" stroke="${C.cyan}" stroke-width="2.5" opacity="0.5" transform="translate(2.5,-2)"/>
-<path d="${line}" fill="none" stroke="url(#lineStroke)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
-${ticks.map((t) => `<text class="mono" x="${fmt(t.x)}" y="${baseline + 26}" font-size="14" fill="${C.muted}" text-anchor="middle" letter-spacing="0.5">${t.label}</text>`).join('\n')}
-<text class="mono" x="${M}" y="${H - 18}" font-size="13" fill="${C.muted}" letter-spacing="1">CONTRIBUTIONS/DAY &lt;&gt; 7-DAY ROLLING AVERAGE</text>
+<path id="trace" d="${line}" fill="none" stroke="url(#lineStroke)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+<circle r="7" fill="${C.yellow}" opacity="0.28" filter="url(#glow)">
+<animateMotion dur="14s" repeatCount="indefinite" rotate="0"><mpath href="#trace"/></animateMotion>
+</circle>
+<circle r="3.2" fill="${C.void}" stroke="${C.yellow}" stroke-width="2">
+<animateMotion dur="14s" repeatCount="indefinite" rotate="0"><mpath href="#trace"/></animateMotion>
+</circle>
+${scanSweep('plotScan', PAD.left, PAD.top - 12, plotW, plotH + 12, { dur: '9s', band: 240, opacity: 0.11 })}
+${ticks.map((t) => `<text class="mono" x="${fmt(t.x)}" y="${baseline + 26}" font-size="13" fill="${C.muted}" text-anchor="middle" letter-spacing="0.5">${t.label}</text>`).join('\n')}
+<text class="mono" x="${M}" y="${H - 18}" font-size="12" fill="${C.muted}" letter-spacing="1">CONTRIBUTIONS/DAY &lt;&gt; 7-DAY ROLLING AVERAGE</text>
 `, `
 <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
 <stop offset="0%" stop-color="${C.yellow}" stop-opacity="0.42"/>
@@ -545,7 +615,7 @@ function breach() {
         const fill = lv >= 3 ? C.void : lv >= 1 ? C.text : '#2E4C55';
         return `<rect x="${xOf(c)}" y="${yOf(r)}" width="${cell}" height="${cell}" fill="${RAMP[lv]}" opacity="${TILE_OPACITY[lv]}"/>` +
           `<text class="mono" x="${fmt(M + c * pitch + (pitch - 5) / 2)}" y="${fmt(top + r * pitch + (pitch - 5) / 2 + 5)}" ` +
-          `font-size="14" fill="${fill}" text-anchor="middle">${codeOf(c, r)}</text>`;
+          `font-size="13" fill="${fill}" text-anchor="middle">${codeOf(c, r)}</text>`;
       })
     )
     .join('\n');
@@ -577,7 +647,7 @@ function breach() {
     const pick = path[i];
     return `<rect x="${x}" y="72" width="${slotW}" height="32" fill="none" stroke="${C.grid}" stroke-width="1.5"/>` +
       (pick
-        ? `<text class="mono" x="${x + slotW / 2}" y="${94}" font-size="17" fill="${C.yellow}" text-anchor="middle" opacity="0">${codeOf(pick[0], pick[1])}${atStep(i)}</text>`
+        ? `<text class="mono" x="${x + slotW / 2}" y="${94}" font-size="15" fill="${C.yellow}" text-anchor="middle" opacity="0">${codeOf(pick[0], pick[1])}${atStep(i)}</text>`
         : '');
   }).join('\n');
 
@@ -588,7 +658,7 @@ function breach() {
     const m = col[0].date.slice(0, 7);
     if (m !== lastMonth) {
       lastMonth = m;
-      ticks.push(`<text class="mono" x="${fmt(M + c * pitch + (pitch - 5) / 2)}" y="${fmt(top + ROWS * pitch + 22)}" font-size="14" fill="${C.muted}" text-anchor="middle" letter-spacing="0.5">${monthLabel(col[0].date)}</text>`);
+      ticks.push(`<text class="mono" x="${fmt(M + c * pitch + (pitch - 5) / 2)}" y="${fmt(top + ROWS * pitch + 22)}" font-size="13" fill="${C.muted}" text-anchor="middle" letter-spacing="0.5">${monthLabel(col[0].date)}</text>`);
     }
   });
 
@@ -613,23 +683,24 @@ function breach() {
       // Each daemon lands as the solve reaches its third of the buffer.
       const step = i * 3 + 2;
       return `<rect x="${fmt(x)}" y="410" width="${fmt(dW - 18)}" height="2" fill="${C.cyan}" opacity="0.5"/>` +
-        `<text class="mono" x="${fmt(x)}" y="434" font-size="16" fill="${C.cyan}" letter-spacing="1.5">${name}</text>` +
-        `<text class="display" x="${fmt(x)}" y="468" font-size="26" fill="${C.yellow}">${esc(value)}</text>` +
-        `<text class="mono" x="${fmt(x + dW - 22)}" y="434" font-size="13" fill="${C.muted}" text-anchor="end">PENDING` +
+        `<text class="mono" x="${fmt(x)}" y="434" font-size="14" fill="${C.cyan}" letter-spacing="1.5">${name}</text>` +
+        `<text class="display" x="${fmt(x)}" y="468" font-size="24" fill="${C.yellow}">${esc(value)}</text>` +
+        `<text class="mono" x="${fmt(x + dW - 22)}" y="434" font-size="12" fill="${C.muted}" text-anchor="end">PENDING` +
         `<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;${fmt((step * STEP) / TOTAL)};${fmt((step * STEP) / TOTAL + 0.012)};1" dur="${fmt(TOTAL)}s" repeatCount="indefinite"/></text>` +
-        `<text class="mono" x="${fmt(x + dW - 22)}" y="434" font-size="13" fill="${C.yellow}" text-anchor="end" opacity="0">INSTALLED${atStep(step)}</text>`;
+        `<text class="mono" x="${fmt(x + dW - 22)}" y="434" font-size="12" fill="${C.yellow}" text-anchor="end" opacity="0">INSTALLED${atStep(step)}</text>`;
     })
     .join('\n');
 
   return panel(W, H, `${username} breach protocol, ${cols} week contribution matrix`, `
-${glitch('BREACH PROTOCOL', { x: M, y: 68, size: 40 })}
+${glitch('BREACH PROTOCOL', { x: M, y: 68, size: 36 })}
 <rect x="${M}" y="82" width="230" height="3" fill="${C.yellow}"/>
-<text class="mono" x="${M}" y="112" font-size="14" fill="${C.cyan}" letter-spacing="1.2">CODE MATRIX &lt;&gt; LAST ${cols} WEEKS &lt;&gt; ONE CODE PER DAY</text>
-<text class="mono" x="${W - M}" y="60" font-size="14" fill="${C.cyan}" text-anchor="end" letter-spacing="1.5">BUFFER ${SLOTS}/${SLOTS}</text>
+<text class="mono" x="${M}" y="112" font-size="13" fill="${C.cyan}" letter-spacing="1.2">CODE MATRIX &lt;&gt; LAST ${cols} WEEKS &lt;&gt; ONE CODE PER DAY</text>
+<text class="mono" x="${W - M}" y="60" font-size="13" fill="${C.cyan}" text-anchor="end" letter-spacing="1.5">BUFFER ${SLOTS}/${SLOTS}</text>
 ${buffer}
 ${grid}
 ${trail}
 ${reticle}
+${scanSweep('matrixScan', M, top, W - M * 2, ROWS * pitch, { dur: '6.5s', band: 240, opacity: 0.13 })}
 ${ticks.join('\n')}
 ${daemonRow}
 `);
@@ -641,8 +712,8 @@ function footer() {
   const H = 110;
   return panel(W, H, 'end of line', `
 <rect x="${M}" y="28" width="${W - M * 2}" height="14" fill="url(#hazard)" opacity="0.75"/>
-<text class="display" x="${M}" y="84" font-size="32" fill="${C.yellow}" letter-spacing="2">END OF LINE</text>
-<text class="mono" x="${W - M}" y="84" font-size="13" fill="${C.muted}" text-anchor="end" letter-spacing="1">GENERATED DAILY &lt;&gt; ALL GRAPHS SELF-HOSTED</text>
+<text class="display" x="${M}" y="84" font-size="30" fill="${C.yellow}" letter-spacing="2">END OF LINE</text>
+<text class="mono" x="${W - M}" y="84" font-size="12" fill="${C.muted}" text-anchor="end" letter-spacing="1">GENERATED DAILY &lt;&gt; ALL GRAPHS SELF-HOSTED</text>
 `);
 }
 
