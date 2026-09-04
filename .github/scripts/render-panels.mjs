@@ -578,17 +578,30 @@ function breach() {
   const peakCount = Math.max(...tail.map((d) => d.count), 1);
   const levelOf = (n) => (n === 0 ? 0 : Math.min(4, 1 + Math.floor((n / peakCount) * 3.999)));
   const TILE_OPACITY = [0.16, 0.3, 0.45, 0.65, 0.9];
-  const codeOf = (c, r) => CODES[(c * 31 + r * 7 + cells[c][r].count * 13) % CODES.length];
+
+  // The matrix is dealt fresh every day. The seed is the date rather than
+  // Math.random so a run is reproducible -- regenerating twice on the same day
+  // gives the identical file, which is what keeps the workflow from committing
+  // noise -- but tomorrow's run lays out a completely different board.
+  const daySeed = [...today].reduce((h, ch) => (Math.imul(h, 31) + ch.charCodeAt(0)) >>> 0, 2166136261);
+  let rngState = daySeed;
+  const rand = () => (rngState = (Math.imul(rngState, 1103515245) + 12345) >>> 0) % 0x7fffffff;
+  const codeOf = (c, r) =>
+    CODES[(c * 31 + r * 7 + cells[c][r].count * 13 + daySeed) % CODES.length];
 
   // The solve. Rule of the game: the first pick comes from the top row, then
   // the cursor alternates between choosing within its column and within its
   // row. Ties and empty days are fine -- it simply walks toward the busy ones.
   const seen = new Set();
   const key = (c, r) => `${c},${r}`;
-  const best = (candidates) =>
-    candidates
+  const best = (candidates) => {
+    const pool = candidates
       .filter(([c, r]) => !seen.has(key(c, r)))
-      .sort((a, b) => cells[b[0]][b[1]].count - cells[a[0]][a[1]].count)[0];
+      .sort((a, b) => cells[b[0]][b[1]].count - cells[a[0]][a[1]].count);
+    // Take one of the strongest few rather than always the single busiest, so
+    // the route varies day to day while still heading for the busy days.
+    return pool.length ? pool[rand() % Math.min(3, pool.length)] : undefined;
+  };
 
   const path = [];
   let cursor = best(Array.from({ length: cols }, (_, c) => [c, 0]));
@@ -608,14 +621,38 @@ function breach() {
       `keyTimes="0;${t};${fmt(t + 0.012)};0.96;1" dur="${fmt(TOTAL)}s" repeatCount="indefinite"${extra}/>`;
   };
 
+  // A day with work holds its code; an empty one never settles. Those cells
+  // cycle through three codes on their own clock, so the board is never showing
+  // the same face twice even between daily regenerations.
+  const onPath = new Set(path.map(([c, r]) => key(c, r)));
+  let unstable = 0;
+  const UNSTABLE_CAP = 40;
+
   const grid = cells
     .flatMap((col, c) =>
       col.map((day, r) => {
         const lv = levelOf(day.count);
         const fill = lv >= 3 ? C.void : lv >= 1 ? C.text : '#2E4C55';
-        return `<rect x="${xOf(c)}" y="${yOf(r)}" width="${cell}" height="${cell}" fill="${RAMP[lv]}" opacity="${TILE_OPACITY[lv]}"/>` +
-          `<text class="mono" x="${fmt(M + c * pitch + (pitch - 5) / 2)}" y="${fmt(top + r * pitch + (pitch - 5) / 2 + 5)}" ` +
-          `font-size="13" fill="${fill}" text-anchor="middle">${codeOf(c, r)}</text>`;
+        const cx = fmt(M + c * pitch + (pitch - 5) / 2);
+        const cy = fmt(top + r * pitch + (pitch - 5) / 2 + 5);
+        const tile = `<rect x="${xOf(c)}" y="${yOf(r)}" width="${cell}" height="${cell}" fill="${RAMP[lv]}" opacity="${TILE_OPACITY[lv]}"/>`;
+        const at = `class="mono" x="${cx}" y="${cy}" font-size="13" fill="${fill}" text-anchor="middle"`;
+
+        if (lv > 0 || onPath.has(key(c, r)) || unstable >= UNSTABLE_CAP) {
+          return `${tile}<text ${at}>${codeOf(c, r)}</text>`;
+        }
+        unstable++;
+        const start = CODES.indexOf(codeOf(c, r));
+        const dur = fmt(3.8 + (rand() % 34) / 10);
+        const offset = fmt((rand() % 40) / 10);
+        // Discrete keyframes: each variant simply holds for its third of the cycle.
+        const faces = [0, 1, 2].map((k) => {
+          const values = [0, 1, 2].map((slot) => (slot === k ? 1 : 0)).join(';');
+          return `<text ${at} opacity="${k === 0 ? 1 : 0}">${CODES[(start + k * 2 + 1) % CODES.length]}` +
+            `<animate attributeName="opacity" values="${values}" keyTimes="0;0.3333;0.6667" calcMode="discrete" ` +
+            `dur="${dur}s" begin="-${offset}s" repeatCount="indefinite"/></text>`;
+        }).join('');
+        return tile + faces;
       })
     )
     .join('\n');
